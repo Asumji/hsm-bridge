@@ -7,7 +7,7 @@ export default {
 	 *  - Reason
 	 */
 	"chat:commentBlocked":
-		/^We blocked your comment "(.+)" as it is breaking our rules because (.+). https:\/\/www.hypixel.net\/rules\/$/m,
+		/^We blocked your comment "(.+)" because (.+). https:\/\/www\.hypixel\.net\/rules\/$/,
 
 	"chat:advertising":
 		/^Advertising is against the rules. You will receive a punishment on the server if you attempt to advertise./,

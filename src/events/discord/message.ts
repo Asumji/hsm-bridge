@@ -1,11 +1,26 @@
 import { Message } from "discord.js";
-import { DataSet, RegExpMatcher, englishDataset, englishRecommendedTransformers } from "obscenity";
+import { DataSet, RegExpMatcher, englishRecommendedTransformers } from "obscenity";
 import { Event } from "../../interfaces/Event";
 import emojis from "../../util/emojis";
 import axios from "axios";
 import { botResponse, runCommand } from "../../util/commands";
 
 const whitelist = [""];
+
+declare type EnglishProfaneWord = 'abbo' | 'abeed' | 'africoon' | 'anal' | 'anus' | 
+								  'arabush' | 'arse' | 'ass' | 'bestiality' | 'bastard' |
+								  'boob' | 'boonga' | 'bitch' | 'blowjob' | 'chingchong' |
+							      'chink' | 'cock' | 'cum' | 'cunt' | 'deepthroat' | 'dick' |
+								  'doggystyle' | 'ejaculate' | 'fag' | 'fellatio' | 'felch' |
+								  'fisting' | 'fuck' | 'gangbang' | 'handjob' | 'jizz' | 'lubejob' |
+								  'masturbate' | 'nigger' | 'orgasm' | 'orgy' | 'porn' | 'hentai' |
+								  'pussy' | 'vagina' | 'penis' | 'rape' | 'retard' | 'scat' |
+								  'slut' | 'semen' | 'sex' | 'tit' | 'whore' | 'dildo' | 'double penetration' | 
+								  'finger bang' | 'hooker' | 'jerk off' | 'incest' | 'tranny' | 'buttplug' | 
+								  'cuck' | 'ip' | 'kys' | 'kill yourself' | 'dox' | 'keep yourself safe';
+declare const englishDataset: DataSet<{
+    originalWord: EnglishProfaneWord;
+}>;
 const dataset = new DataSet<{ originalWord: string }>()
 	.addAll(englishDataset)
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion

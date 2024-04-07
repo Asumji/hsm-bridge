@@ -27,7 +27,8 @@
 		"image-hash": "^5.3.2",
 		"mineflayer": "^4.4.0",
 		"obscenity": "^0.1.4",
-		"prismarine-chat": "^1.9.1"
+		"prismarine-chat": "^1.9.1",
+		"skyhelper-networth": "^1.18.5"
 	},
 	"devDependencies": {
 		"@types/node-fetch": "^2.6.2",
