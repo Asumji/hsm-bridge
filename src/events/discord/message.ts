@@ -18,7 +18,7 @@ declare type EnglishProfaneWord = 'abbo' | 'abeed' | 'africoon' | 'anal' | 'anus
 								  'slut' | 'semen' | 'sex' | 'tit' | 'whore' | 'dildo' | 'double penetration' | 
 								  'finger bang' | 'hooker' | 'jerk off' | 'incest' | 'tranny' | 'buttplug' | 
 								  'cuck' | 'ip' | 'kys' | 'kill yourself' | 'dox' | 'keep yourself safe';
-declare const englishDataset: DataSet<{
+const englishDataset = new DataSet<{
     originalWord: EnglishProfaneWord;
 }>;
 const dataset = new DataSet<{ originalWord: string }>()
