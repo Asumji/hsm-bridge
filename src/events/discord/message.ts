@@ -6,16 +6,16 @@ import { botResponse, runCommand } from "../../util/commands";
 
 const filter =  [ ' africoon ',' anal ',' anus ',
 				 ' arabush ',' arse ',' ass ',' bestiality ',' bastard ',
-				 ' boob ',' boonga ',' bitch ',' blowjob ',' chingchong ',
-				 ' chink ',' cock ',' cum ',' cunt ',' deepthroat ',' dick ',
-				 ' doggystyle ',' ejaculate ',' fag ',' fellatio ',' felch ',
-				 ' fisting ',' fuck ',' gangbang ',' handjob ',' jizz ',' lubejob ',
+				 ' boob',' boonga ',' bitch ',' blowjob ',' chingchong ',
+				 ' chink ',' cock ',' cum',' cunt ',' deepthroat ',' dick ',
+				 ' doggystyle ',' ejaculate ',' fag',' fellatio ',' felch ',
+				 ' fisting ',' fuck',' gangbang ',' handjob ',' jizz ',' lubejob ',
 				 ' masturbate ',' nigger ',' orgasm ',' orgy ',' porn ',' hentai ',
-				 ' pussy ',' vagina ',' penis ',' rape ',' retard',' scat ',
-				 ' slut ',' semen ',' sex ',' tit ',' whore ',' dildo ',' double penetration ', 
+				 ' pussy ',' vagina ',' penis ',' rape',' retard',' scat ',
+				 ' slut ',' semen ',' sex ',' tit',' whore ',' dildo ',' double penetration ', 
 				 ' finger bang ',' hooker ',' jerk off ',' incest ',' tranny ',' buttplug ', 
-				 ' cuck ',' ip ',' kys ',' kill yourself ',' dox ',' keep yourself safe ',' suicide ',
-				 ' die ', ' terrorist ', ' terrorism ', ' sexual ', ' pornography ', ' bin laden ',
+				 ' cuck ',' ip ',' kys ',' kill yourself ',' dox',' keep yourself safe ',' suicide ',
+				 ' die ', ' terror', ' sexual ', ' pornography ', ' bin laden ',
 				 'binladen ']
 const filterRegex = new RegExp(filter.join("|"))
 

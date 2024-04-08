@@ -117,7 +117,7 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
                     botResponse(bot,chat,`(${name}) | Networth: ${shortenNumber(networth.networth)} | Unsoulbound Networth: ${shortenNumber(networth.unsoulboundNetworth)}`)
                     break;
                 default:
-                    botResponse(bot,chat,"Unknown command. Available Commands: !cata, !skills, !slayers, !level, !networth")
+                    botResponse(bot,chat,"Unknown command. Available Commands: !cata, !skills, !slayers, !purse, !level, !networth")
             }
         })
     }).catch(e =>{
