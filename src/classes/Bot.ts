@@ -31,6 +31,7 @@ class Bot {
 
 	public onlineCount = 0;
 	public totalCount = 125;
+	public currentlyOnline = ""
 	public readonly mineflayer = createBot({
 		username: process.env.MINECRAFT_EMAIL,
 		password: process.env.MINECRAFT_PASSWORD,

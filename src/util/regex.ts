@@ -13,7 +13,7 @@ export default {
 		/^Advertising is against the rules. You will receive a punishment on the server if you attempt to advertise./,
 
 	"chat:command":
-		/(Guild|Officer) > \[.*\]? (.{1,26}) (\[.*\])?: !(\S*) ?(.*)?/,
+		/(Guild|Officer) > \[.*\]? (.{1,26})( \[.*\])?: !(\S*) ?(.*)?/,
 
 	/**
 	 * When a message is sent in the guild chat
@@ -146,5 +146,8 @@ export default {
 	 *  - Message
 	 */
 	"chat:whisper": /^From (?:\[.*])?\s*(\w{2,17}).*?: (.+)$/,
+
+	"chat:anyReceived": /(.*)/,
+	
 	"chat:test": /Guild > (RPZ2|weeklies|Asumji) joined./,
 };

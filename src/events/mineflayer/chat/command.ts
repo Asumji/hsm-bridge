@@ -8,6 +8,7 @@ export default {
 		bot.logger.info(gRank + " " + name + " " + command + " " + spacedArgs)
 
         const args = spacedArgs?.split(" ")
+		console.log(args)
         runCommand(bot,chat,command,name,args)
 	},
 } as Event;

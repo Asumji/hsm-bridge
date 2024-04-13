@@ -10,8 +10,10 @@ import { getNetworth } from "skyhelper-networth"
 import fetchMuseum from "./requests/fetchMuseum";
 
 export function botResponse(bot:Bot, channel: "Guild"|"Officer", text:string) {
-    bot.sendGuildMessage(channel == "Guild" ? "gc" : "oc",text)
-    channel == "Guild" ? bot.memberChannel?.send(text.replaceAll(" | ","\n")) : bot.officerChannel?.send(text.replaceAll(" | ","\n"))
+    setTimeout(() => {
+        bot.sendGuildMessage(channel == "Guild" ? "gc" : "oc",text)
+        channel == "Guild" ? bot.memberChannel?.send(text.replaceAll(" | ","\n")) : bot.officerChannel?.send(text.replaceAll(" | ","\n"))
+    },300)
 }
 
 export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,name:string,args:any) {
@@ -21,7 +23,6 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
         botResponse(bot,chat,"API could not be reached.")
         return;
     }
-
     await axios.get("https://api.hypixel.net/v2/skyblock/profiles?uuid="+mojangProfile.id+"&key="+process.env.HYPIXEL_API_KEY).then(res => {
         res.data.profiles.forEach(async (profile: any) => {
             if (profile.selected != true) return
@@ -38,11 +39,11 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
                     let tankLevel = getLevel(profile["members"][mojangProfile.id]["dungeons"]["player_classes"]["tank"]["experience"] == undefined ? 0 : profile["members"][mojangProfile.id]["dungeons"]["player_classes"]["tank"]["experience"],"dungeoneering")
                     let bersLevel = getLevel(profile["members"][mojangProfile.id]["dungeons"]["player_classes"]["berserk"]["experience"] == undefined ? 0 : profile["members"][mojangProfile.id]["dungeons"]["player_classes"]["berserk"]["experience"],"dungeoneering")
                     let healerLevel = getLevel(profile["members"][mojangProfile.id]["dungeons"]["player_classes"]["healer"]["experience"] == undefined ? 0 : profile["members"][mojangProfile.id]["dungeons"]["player_classes"]["healer"]["experience"],"dungeoneering")
-                    botResponse(bot,chat,`(${name}) | Cata: ${cataLevel} | Arch: ${archLevel} | Mage: ${mageLevel} | Tank: ${tankLevel} | Bers: ${bersLevel} | Healer: ${healerLevel}`)
+                    botResponse(bot,chat,`(${args != undefined ? args[0] : name}) | Cata: ${cataLevel} | Arch: ${archLevel} | Mage: ${mageLevel} | Tank: ${tankLevel} | Bers: ${bersLevel} | Healer: ${healerLevel}`)
                     break;
                 case "skill":
                 case "skills":
-                    const hypixelProfile = await fetchHypixelPlayerProfile(name)
+                    const hypixelProfile = await fetchHypixelPlayerProfile(args != undefined ? args[0] : name)
                     if (isFetchError(hypixelProfile)) {
                         logError(new Error("API unresponsive"),hypixelProfile.statusText)
                         botResponse(bot,chat,"API could not be reached.")
@@ -50,7 +51,7 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
                     }
                     
                     let farmingCap = profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"] == undefined ? 50 : 50+profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"]
-					let tamingCap = hypixelProfile.achievements.skyblock_domesticator == undefined ? 0 : hypixelProfile.achievements.skyblock_domesticator
+                    let tamingCap = hypixelProfile.achievements.skyblock_domesticator == undefined ? 0 : hypixelProfile.achievements.skyblock_domesticator
 
                     let farming = getLevel(profile["members"][mojangProfile.id]["player_data"]["experience"]["SKILL_FARMING"] == undefined ? 0 : profile["members"][mojangProfile.id]["player_data"]["experience"]["SKILL_FARMING"],"farming",farmingCap)
                     let mining = getLevel(profile["members"][mojangProfile.id]["player_data"]["experience"]["SKILL_MINING"] == undefined ? 0 : profile["members"][mojangProfile.id]["player_data"]["experience"]["SKILL_MINING"],"mining")
@@ -66,7 +67,7 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
 
                     let skillAvg = (farming+mining+foraging+combat+alchemy+carpentry+fishing+enchanting+taming)/9
 
-                    botResponse(bot,chat,`(${name}) | Farming: ${farming} | Mining: ${mining} | Foraging: ${foraging} | Combat: ${combat} | Alchemy: ${alchemy} | Carpentry: ${carpentry} | Fishing: ${fishing} | Enchanting: ${enchanting} | Taming: ${taming} | Social: ${social} | Runecrafting: ${runecrafting} | SkillAvg: ${skillAvg.toFixed(2)}`)
+                    botResponse(bot,chat,`(${args != undefined ? args[0] : name}) | Farming: ${farming} | Mining: ${mining} | Foraging: ${foraging} | Combat: ${combat} | Alchemy: ${alchemy} | Carpentry: ${carpentry} | Fishing: ${fishing} | Enchanting: ${enchanting} | Taming: ${taming} | Social: ${social} | Runecrafting: ${runecrafting} | SkillAvg: ${skillAvg.toFixed(2)}`)
                     break;
                 case "slayer":
                 case "slayers":
@@ -83,15 +84,15 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
                     let vamp = profile["members"][mojangProfile.id]["slayer"]["slayer_bosses"]["vampire"]
                         vamp = getLevel(vamp.xp == undefined ? 0 : vamp.xp,"vamp")
 
-                    botResponse(bot,chat,`(${name}) | Zombie: ${zombie} | Spider: ${spider} | Wolf: ${wolf} | Enderman: ${enderman} | Blaze: ${blaze} | Vamp: ${vamp}`)
+                    botResponse(bot,chat,`(${args != undefined ? args[0] : name}) | Zombie: ${zombie} | Spider: ${spider} | Wolf: ${wolf} | Enderman: ${enderman} | Blaze: ${blaze} | Vamp: ${vamp}`)
                     break;
                 case "bank":
                 case "coins":
                 case "purse":
-                    botResponse(bot,chat,`(${name}) | Purse: ${shortenNumber(profile["members"][mojangProfile.id]["currencies"]["coin_purse"])} | Bank: ${shortenNumber(profile["banking"]["balance"])}`)
+                    botResponse(bot,chat,`(${args != undefined ? args[0] : name}) | Purse: ${shortenNumber(profile["members"][mojangProfile.id]["currencies"]["coin_purse"])} | Bank: ${shortenNumber(profile["banking"]["balance"])}`)
                     break;
                 case "level":
-                    botResponse(bot,chat,`(${name}) | Level: ${profile["members"][mojangProfile.id]["leveling"]["experience"]/100}`)
+                    botResponse(bot,chat,`(${args != undefined ? args[0] : name}) | Level: ${profile["members"][mojangProfile.id]["leveling"]["experience"]/100}`)
                     break;
                 case "nw":
                 case "networth":
@@ -114,7 +115,7 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
                         break;
                     }
                     
-                    botResponse(bot,chat,`(${name}) | Networth: ${shortenNumber(networth.networth)} | Unsoulbound Networth: ${shortenNumber(networth.unsoulboundNetworth)}`)
+                    botResponse(bot,chat,`(${args != undefined ? args[0] : name}) | Networth: ${shortenNumber(networth.networth)} | Unsoulbound Networth: ${shortenNumber(networth.unsoulboundNetworth)}`)
                     break;
                 default:
                     botResponse(bot,chat,"Unknown command. Available Commands: !cata, !skills, !slayers, !purse, !level, !networth")

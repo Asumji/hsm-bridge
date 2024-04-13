@@ -24,6 +24,7 @@ export default {
 
 		setInterval(() => {
 			bot.executeCommand("/g online");
+			bot.currentlyOnline = ""
 		}, 1000 * 60 * 5);
 
 		setTimeout(() => {
