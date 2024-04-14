@@ -17,6 +17,7 @@ export function botResponse(bot:Bot, channel: "Guild"|"Officer", text:string) {
 }
 
 export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,name:string,args:any) {
+    console.log(name)
     const mojangProfile = await fetchMojangProfile(args != undefined ? args[0] : name)
 
     if (isFetchError(mojangProfile)) {

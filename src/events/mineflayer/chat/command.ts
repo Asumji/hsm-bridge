@@ -4,8 +4,8 @@ import { runCommand } from "../../../util/commands";
 export default {
 	name: "chat:command",
 	runOnce: false,
-	run: async (bot, chat, name, gRank, command, spacedArgs) => {
-		bot.logger.info(gRank + " " + name + " " + command + " " + spacedArgs)
+	run: async (bot, chat, rank, name, gRank, command, spacedArgs) => {
+		bot.logger.info(gRank + " " + rank + " " + name + " " + command + " " + spacedArgs)
 
         const args = spacedArgs?.split(" ")
 		console.log(args)
