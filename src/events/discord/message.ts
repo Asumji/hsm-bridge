@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import { Event } from "../../interfaces/Event";
 import emojis from "../../util/emojis";
 import axios from "axios";
-import { botResponse, runCommand } from "../../util/commands";
+import { runCommand } from "../../util/commands";
 
 const filter =  [ ' africoon ',' anal ',' anus ',
 				 ' arabush ',' arse ',' ass ',' bestiality ',' bastard ',
@@ -15,8 +15,9 @@ const filter =  [ ' africoon ',' anal ',' anus ',
 				 ' slut ',' semen ',' sex ',' tit ',' tits ',' whore ',' dildo ',' double penetration ', 
 				 ' finger bang ',' hooker ',' jerk off ',' incest ',' tranny ',' buttplug ', 
 				 ' cuck ',' ip ',' kys ',' kill yourself ',' dox',' keep yourself safe ',' suicide ',
-				 ' terror', ' sexual ', 'pornography', ' bin laden ',' stripper ',' esex ',
-				 'binladen ','braindead',' slave ', ' slavery ',' meth ',' cocaine ',' methamphetamine'];
+				 ' terror ', ' osamabinladen ', ' sexual ', ' pornography ', ' bin laden ',' stripper ',' esex ',
+				 ' binladen ',' braindead',' slave ', ' slavery ',' meth ',' cocaine ',' methamphetamine ',
+				 ' pegging ', ' peg you ', ' peg me ', ' vore ', ' schizo ', ' schizophrenic ',' drugs '];
 const filterRegex = new RegExp(filter.join("|"))
 
 export let latestMessage : any[] = []
@@ -33,10 +34,8 @@ export default {
 
 		if (message.content.startsWith("!")) {
 			const args = message.content.split(" ")
-			if (args[0] == undefined || args[1] == undefined) {
-				botResponse(bot,message.channel == bot.memberChannel ? "Guild" : "Officer","Missing some arguments. Usage: !<command> <name>")
-			} else {
-				runCommand(bot,message.channel == bot.memberChannel ? "Guild" : "Officer",args[0].replace("!",""),args[1],undefined)
+			if (args[0]) {
+				runCommand(bot,message.channel == bot.memberChannel ? "Guild" : "Officer",args[0]?.replace("!",""),args[1],undefined)
 			}
 		}
 
