@@ -3,22 +3,7 @@ import { Event } from "../../interfaces/Event";
 import emojis from "../../util/emojis";
 import axios from "axios";
 import { runCommand } from "../../util/commands";
-
-const filter =  [ ' africoon ',' anal ',' anus ',
-				 ' arabush ',' arse ',' ass ',' bestiality ',' bastard ',
-				 ' boob',' boonga ',' bitch ',' blowjob ',' chingchong ',
-				 ' chink ',' cock ',' cum ',' cunt ',' deepthroat ',' dick ',
-				 ' doggystyle ',' ejaculate ',' fag',' fellatio ',' felch ',
-				 ' fisting ',' fuck',' gangbang ',' handjob ',' jizz ',' lubejob ',
-				 ' masturbate ',' nigger ',' nigga ',' orgasm ',' orgy ',' porn ',' hentai ',
-				 ' pussy ',' vagina ',' penis ',' rape',' retard',' scat ',
-				 ' slut ',' semen ',' sex ',' tit ',' tits ',' whore ',' dildo ',' double penetration ', 
-				 ' finger bang ',' hooker ',' jerk off ',' incest ',' tranny ',' buttplug ', 
-				 ' cuck ',' ip ',' kys ',' kill yourself ',' dox',' keep yourself safe ',' suicide ',
-				 ' terror ', ' osamabinladen ', ' sexual ', ' pornography ', ' bin laden ',' stripper ',' esex ',
-				 ' binladen ',' braindead',' slave ', ' slavery ',' meth ',' cocaine ',' methamphetamine ',
-				 ' pegging ', ' peg you ', ' peg me ', ' vore ', ' schizo ', ' schizophrenic ',' drugs '];
-const filterRegex = new RegExp(filter.join("|"))
+import _filter from "../../util/blacklist/_filter.json"
 
 export let latestMessage : any[] = []
 export default {
@@ -31,6 +16,8 @@ export default {
 			(message.channel != bot.memberChannel && message.channel != bot.officerChannel)
 		)
 			return;
+
+		let filterRegex = new RegExp(_filter.words.join("|"))
 
 		if (message.content.startsWith("!")) {
 			const args = message.content.split(" ")
