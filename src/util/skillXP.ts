@@ -1,4 +1,17 @@
+//https://github.com/SkyCryptWebsite/SkyCrypt/blob/development/src/constants/leveling.js
 const constants: any = {
+	HOTM_XP: {
+		1: 0,
+		2: 3000,
+		3: 9000,
+		4: 25000,
+		5: 60000,
+		6: 100000,
+		7: 150000,
+		8: 210000,
+		9: 290000,
+		10: 400000
+	  },
 	LEVELING_XP: {
 		1: 50,
 		2: 125,
@@ -247,12 +260,13 @@ const constants: any = {
 		wolf: 9,
 		enderman: 9,
 		blaze: 9,
-		vamp: 5
+		vamp: 5,
+		hotm: 10
 	},
 };
 
 export function getLevel(xp: number, skill: string, unlockedCap: number = 0) {
-	if (skill == "runecrafting" || skill == "social" || skill == "zombie" || skill == "spider" || skill == "wolf" || skill == "enderman" || skill == "blaze" || skill == "vamp") {
+	if (skill == "runecrafting" || skill == "social" || skill == "zombie" || skill == "spider" || skill == "wolf" || skill == "enderman" || skill == "blaze" || skill == "vamp" || skill == "hotm") {
 		for (let i = 1; i <= constants.SKILL_CAPS[skill]; i++) {
             xp -= constants[skill.toUpperCase()+"_XP"][i]
             if (xp < 0) return i-1

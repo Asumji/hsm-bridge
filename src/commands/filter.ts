@@ -35,35 +35,44 @@ export default {
 					},
 				],
 			},
+			{
+				name: "list",
+				description: "Lists the filter",
+				type: ApplicationCommandOptionType.Subcommand,
+			},
 		],
 	},
 	run: async (bot, interaction, args) => {
-		const type = interaction.options.getSubcommand() as "add" | "remove";
+		const type = interaction.options.getSubcommand() as "add" | "remove" | "list";
 		const filter = _filter as FilterEntry;
 
-		const isOnFilter = filter.words.some((word: string) => word === " "+args[0]+" ");
-		if ((type === "add" && isOnFilter) || (type === "remove" && !isOnFilter)) {
-			const embed = new EmbedBuilder()
-				.setColor("Red")
-				.setTitle("Error")
-				.setDescription(`That word is ${type === "add" ? "already" : "not"} in the filter!`);
+		if (type !== "list") {
+			const isOnFilter = filter.words.some((word: string) => word === " "+args[0]+" ");
+			if ((type === "add" && isOnFilter) || (type === "remove" && !isOnFilter)) {
+				const embed = new EmbedBuilder()
+					.setColor("Red")
+					.setTitle("Error")
+					.setDescription(`That word is ${type === "add" ? "already" : "not"} in the filter!`);
 
-			await interaction.reply({ embeds: [embed] });
-			return;
+				await interaction.reply({ embeds: [embed] });
+				return;
+			}
+			bot.logger.info("filter: " + type + " " + args[0])
+
+			const successEmbed = new EmbedBuilder()
+				.setColor(0x00ff00)
+				.setDescription(type == "add" ? `Added ${args[0]} to the filter!` : `Removed ${args[0]} from the filter!`)
+
+			if (type === "add") {
+				_filter.words.push(" "+args[0]+" ")
+				writeToJsonFile("./src/util/blacklist/_filter.json",_filter,interaction,successEmbed)
+			} else {
+				_filter.words.splice(_filter.words.indexOf(" "+args[0]+" "))
+				writeToJsonFile("./src/util/blacklist/_filter.json",_filter,interaction,successEmbed)
+			}
+		} else {
+			await interaction.reply({content:`\`\`\`js\n${JSON.stringify(_filter)}\`\`\``,ephemeral:true})
 		}
-        bot.logger.info("filter: " + type + " " + args[0])
-
-        const successEmbed = new EmbedBuilder()
-            .setColor(0x00ff00)
-            .setDescription(type == "add" ? `Added ${args[0]} to the filter!` : `Removed ${args[0]} from the filter!`)
-
-		if (type === "add") {
-            _filter.words.push(" "+args[0]+" ")
-            writeToJsonFile("./src/util/blacklist/_filter.json",_filter,interaction,successEmbed)
-        } else {
-            _filter.words.splice(_filter.words.indexOf(" "+args[0]+" "))
-            writeToJsonFile("./src/util/blacklist/_filter.json",_filter,interaction,successEmbed)
-        }
 	},
 	staffOnly: true,
 } as Command;

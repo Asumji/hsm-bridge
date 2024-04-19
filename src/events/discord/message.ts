@@ -4,6 +4,8 @@ import emojis from "../../util/emojis";
 import axios from "axios";
 import { runCommand } from "../../util/commands";
 import _filter from "../../util/blacklist/_filter.json"
+import emojilib from "emojilib"
+import logError from "../../util/logError";
 
 export let latestMessage : any[] = []
 export default {
@@ -44,9 +46,19 @@ export default {
 			message.mentions.repliedUser != null
 				? message.content = `${name} replying to ${message.mentions.repliedUser.bot == false 
 					? message.guild?.members.cache.get(message.mentions.repliedUser.id)?.displayName
-					: message.mentions.repliedUser.username
+					: message.mentions.repliedUser.username.replace(/  \[.*\]/,"")
 				}${bot.chatSeparator} ${message.content.replace(/\r?\n|\r/g, " ")}`
 				: message.content = `${name}${bot.chatSeparator} ${message.content.replace(/\r?\n|\r/g, " ")}`;
+
+			message.content = message.content.replace(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g,function(emoji) {
+				if (!emojilib[emoji]) return emoji as string
+				return ":"+emojilib[emoji]![0] as string+":"
+			})
+
+			message.content = message.content.replace(/<@!?([0-9]*)>/g,function(userID) {
+				userID = userID.replace(/<|>|@/g,"")
+				return "@"+message.guild?.members.cache.get(userID)?.displayName
+			})
 
 			if (message.content.length > 217) {
 				await message.react(emojis.error)
@@ -71,6 +83,9 @@ export default {
 						bot.logger.info(res.data.data.link)
 						bot.sendGuildMessage(message.channel.id === bot.memberChannel?.id ? "gc" : "oc", res.data.data.link)
 					},500)
+				}).catch(e => {
+					message.reply("Image couldn't be sent due to an imgur API error.")
+					logError(new Error("Imgur API Error "+e))
 				})
 			}
 			latestMessage = [message.channel.id === bot.memberChannel?.id ? "gc" : "oc",message]

@@ -12,13 +12,14 @@ import { Commands } from "../interfaces/Command";
 
 const commands: Commands = {
     api: {
-        commands: ["cata", "skills", "slayers", "bank", "level", "networth"],
+        commands: ["cata", "skills", "slayers", "bank", "level", "networth", "hotm"],
         aliases: {
             skill: "skills",
             slayer: "slayers",
             coins: "bank",
             purse: "bank",
-            nw: "networth"
+            nw: "networth",
+            powder: "hotm"
         }
     },
     text: {
@@ -136,6 +137,14 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
                         }
                         
                         botResponse(bot,chat,`(${args != undefined ? args[0] : name}) | Networth: ${shortenNumber(networth.networth)} | Unsoulbound Networth: ${shortenNumber(networth.unsoulboundNetworth)}`)
+                        break;
+                    case "hotm":
+                        let hotm = getLevel(profile["members"][mojangProfile.id]["mining_core"]["experience"],"hotm")
+                        let mithril = profile["members"][mojangProfile.id]["mining_core"]["powder_mithril"]+profile["members"][mojangProfile.id]["mining_core"]["powder_spent_mithril"]
+                        let gemstone = profile["members"][mojangProfile.id]["mining_core"]["powder_gemstone"]+profile["members"][mojangProfile.id]["mining_core"]["powder_spent_gemstone"]
+                        let glacite = profile["members"][mojangProfile.id]["mining_core"]["powder_glacite"]+profile["members"][mojangProfile.id]["mining_core"]["powder_spent_glacite"]
+                        
+                        botResponse(bot,chat,`(${args != undefined ? args[0] : name}) | HOTM: ${hotm} | Mithril: ${shortenNumber(mithril.toString() == "NaN" ? 0 : mithril)} | Gemstone: ${shortenNumber(gemstone.toString() == "NaN" ? 0 : gemstone)} | Glacite: ${shortenNumber(glacite.toString() == "NaN" ? 0 : glacite)}`)
                         break;
                     default:
                         botResponse(bot,chat,"Unknown Command although it should exist. If this happens go spam asumji on discord.")
