@@ -7,7 +7,7 @@ import writeToJsonFile from "../util/writeToJsonFile";
 export default {
 	data: {
 		name: "filter",
-		description: "Add or remove a user from the filter!",
+		description: "Add or remove a word from the filter!",
 		options: [
 			{
 				name: "add",
