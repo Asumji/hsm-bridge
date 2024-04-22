@@ -19,7 +19,7 @@ export default {
 		)
 			return;
 
-		let filterRegex = new RegExp(_filter.words.join("|"))
+		let filterRegex = new RegExp(_filter.words.join("|").replace(/ /g,"[^a-zA-Z0-9]"))
 
 		if (message.content.startsWith("!")) {
 			const args = message.content.split(" ")
