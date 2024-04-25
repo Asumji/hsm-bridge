@@ -23,7 +23,7 @@ const commands: Commands = {
         }
     },
     text: {
-        commands: ["mf","active"],
+        commands: ["mf","active","real"],
         aliases: {
             activerole: "active"
         }
@@ -169,6 +169,9 @@ export async function runCommand(bot:Bot,chat:"Guild"|"Officer",command:string,n
                 break;
             case "active":
                 botResponse(bot,chat,"The top 3 players every week in guild xp get the active guild rank and discord role.")
+                break;
+            case "real":
+                botResponse(bot,chat,"https://i.imgur.com/b9zU9EA.png")
                 break;
             default:
                 botResponse(bot,chat,"Unknown Command although it should exist. If this happens go spam asumji on discord.")
