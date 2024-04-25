@@ -4,7 +4,7 @@
 export interface HypixelPlayerResponse {
 	id: string;
 	achievementsOneTime?: (string | null[] | null)[] | null;
-	achievements: {skyblock_domesticator?: number}
+	achievements: { skyblock_domesticator?: number };
 	channel?: string;
 	disguise?: string;
 	displayname: string;

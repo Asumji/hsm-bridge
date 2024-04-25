@@ -31,7 +31,7 @@ class Bot {
 
 	public onlineCount = 0;
 	public totalCount = 125;
-	public currentlyOnline = ""
+	public currentlyOnline = "";
 	public readonly mineflayer = createBot({
 		username: process.env.MINECRAFT_EMAIL,
 		password: process.env.MINECRAFT_PASSWORD,
@@ -60,27 +60,35 @@ class Bot {
 		username: string = "",
 		message: string = "",
 		guildMessage = false,
-		guildRank: string = ""
+		guildRank: string = "",
 	) {
 		const embed = new EmbedBuilder()
 			.setDescription(padMessage ? `${"-".repeat(54)}\n${content}\n${"-".repeat(54)}` : content)
 			.setColor(color);
 
 		if (guildMessage) {
-			const webhookClient = channel == "gc" ? new WebhookClient({id:"1219013672438071418",token:"Gt8P8T9MmIKDExC1mH_sxzVWMzuFuhcr588tGzM82xJmqSNPNsm3vGi2UaopA7JHh_R9"}) : new WebhookClient({id:"1222258212733059204",token:"TfC87YnUi75lc5BtDInnwEBCDjj0dHYezczpVPzNRd-qfXriGKbdrdd2F46VGjc1c7Pj"})
+			const webhookClient =
+				channel == "gc"
+					? new WebhookClient({
+							id: "1219013672438071418",
+							token: "Gt8P8T9MmIKDExC1mH_sxzVWMzuFuhcr588tGzM82xJmqSNPNsm3vGi2UaopA7JHh_R9",
+					  })
+					: new WebhookClient({
+							id: "1222258212733059204",
+							token: "TfC87YnUi75lc5BtDInnwEBCDjj0dHYezczpVPzNRd-qfXriGKbdrdd2F46VGjc1c7Pj",
+					  });
 
 			webhookClient.send({
-				content:message,
-				username:(guildRank != undefined ? username+" "+guildRank : username),
-				avatarURL:"https://mc-heads.net/avatar/"+username
-			})
-			return
+				content: message,
+				username: guildRank != undefined ? username + " " + guildRank : username,
+				avatarURL: "https://mc-heads.net/avatar/" + username,
+			});
+			return;
 		}
 
 		return channel === "gc"
 			? await this.memberChannel?.send({ embeds: [embed] })
 			: await this.officerChannel?.send({ embeds: [embed] });
-		
 	}
 
 	public sendGuildMessage(channel: "gc" | "oc", message: string) {

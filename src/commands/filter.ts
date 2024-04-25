@@ -47,7 +47,7 @@ export default {
 		const filter = _filter as FilterEntry;
 
 		if (type !== "list") {
-			const isOnFilter = filter.words.some((word: string) => word === " "+args[0]+" ");
+			const isOnFilter = filter.words.some((word: string) => word === " " + args[0] + " ");
 			if ((type === "add" && isOnFilter) || (type === "remove" && !isOnFilter)) {
 				const embed = new EmbedBuilder()
 					.setColor("Red")
@@ -57,21 +57,23 @@ export default {
 				await interaction.reply({ embeds: [embed] });
 				return;
 			}
-			bot.logger.info("filter: " + type + " " + args[0])
+			bot.logger.info("filter: " + type + " " + args[0]);
 
 			const successEmbed = new EmbedBuilder()
 				.setColor(0x00ff00)
-				.setDescription(type == "add" ? `Added ${args[0]} to the filter!` : `Removed ${args[0]} from the filter!`)
+				.setDescription(
+					type == "add" ? `Added ${args[0]} to the filter!` : `Removed ${args[0]} from the filter!`,
+				);
 
 			if (type === "add") {
-				_filter.words.push(" "+args[0]+" ")
-				writeToJsonFile("./src/util/blacklist/_filter.json",_filter,interaction,successEmbed)
+				_filter.words.push(" " + args[0] + " ");
+				writeToJsonFile("./src/util/blacklist/_filter.json", _filter, interaction, successEmbed);
 			} else {
-				_filter.words.splice(_filter.words.indexOf(" "+args[0]+" "))
-				writeToJsonFile("./src/util/blacklist/_filter.json",_filter,interaction,successEmbed)
+				_filter.words.splice(_filter.words.indexOf(" " + args[0] + " "));
+				writeToJsonFile("./src/util/blacklist/_filter.json", _filter, interaction, successEmbed);
 			}
 		} else {
-			await interaction.reply({content:`\`\`\`js\n${JSON.stringify(_filter)}\`\`\``,ephemeral:true})
+			await interaction.reply({ content: `\`\`\`js\n${JSON.stringify(_filter)}\`\`\``, ephemeral: true });
 		}
 	},
 	staffOnly: true,

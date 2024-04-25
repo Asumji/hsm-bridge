@@ -9,13 +9,13 @@ export interface Command {
 
 export interface Commands {
 	api: {
-		commands: string[],
-		aliases: any
-	},
+		commands: string[];
+		aliases: any;
+	};
 	text: {
-		commands: string[],
-		aliases: any
-	}
+		commands: string[];
+		aliases: any;
+	};
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -10,8 +10,8 @@ const constants: any = {
 		7: 150000,
 		8: 210000,
 		9: 290000,
-		10: 400000
-	  },
+		10: 400000,
+	},
 	LEVELING_XP: {
 		1: 50,
 		2: 125,
@@ -178,7 +178,7 @@ const constants: any = {
 		47: 60000000,
 		48: 75000000,
 		49: 93000000,
-		50: 116250000
+		50: 116250000,
 	},
 	ZOMBIE_XP: {
 		1: 5,
@@ -261,31 +261,42 @@ const constants: any = {
 		enderman: 9,
 		blaze: 9,
 		vamp: 5,
-		hotm: 10
+		hotm: 10,
 	},
 };
 
 export function getLevel(xp: number, skill: string, unlockedCap: number = 0) {
-	if (skill == "runecrafting" || skill == "social" || skill == "zombie" || skill == "spider" || skill == "wolf" || skill == "enderman" || skill == "blaze" || skill == "vamp" || skill == "hotm") {
+	if (
+		skill == "runecrafting" ||
+		skill == "social" ||
+		skill == "zombie" ||
+		skill == "spider" ||
+		skill == "wolf" ||
+		skill == "enderman" ||
+		skill == "blaze" ||
+		skill == "vamp" ||
+		skill == "hotm"
+	) {
 		for (let i = 1; i <= constants.SKILL_CAPS[skill]; i++) {
-            xp -= constants[skill.toUpperCase()+"_XP"][i]
-            if (xp < 0) return i-1
-        }
-        return constants.SKILL_CAPS[skill]
+			xp -= constants[skill.toUpperCase() + "_XP"][i];
+			if (xp < 0) return i - 1;
+		}
+		return constants.SKILL_CAPS[skill];
 	} else if (skill == "dungeoneering") {
-        for (let i = 1; i <= constants.SKILL_CAPS[skill]; i++) {
-            xp -= constants.DUNGEONEERING_XP[i]
-            if (xp < 0) return i-1
-        }
-        return 50+Math.floor(xp/200000000)
-    } else {
-        if ((skill == "farming" || skill == "taming") && unlockedCap == 0) throw new Error("Farming/Taming requires an unlockedCap")
-        if (unlockedCap == 0) unlockedCap = constants.SKILL_CAPS[skill]
+		for (let i = 1; i <= constants.SKILL_CAPS[skill]; i++) {
+			xp -= constants.DUNGEONEERING_XP[i];
+			if (xp < 0) return i - 1;
+		}
+		return 50 + Math.floor(xp / 200000000);
+	} else {
+		if ((skill == "farming" || skill == "taming") && unlockedCap == 0)
+			throw new Error("Farming/Taming requires an unlockedCap");
+		if (unlockedCap == 0) unlockedCap = constants.SKILL_CAPS[skill];
 
 		for (let i = 1; i <= unlockedCap; i++) {
-            xp -= constants.LEVELING_XP[i]
-            if (xp < 0) return i-1
-        }
-        return unlockedCap
+			xp -= constants.LEVELING_XP[i];
+			if (xp < 0) return i - 1;
+		}
+		return unlockedCap;
 	}
 }

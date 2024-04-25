@@ -6,14 +6,12 @@ export default {
 	 *  - Comment blocked
 	 *  - Reason
 	 */
-	"chat:commentBlocked":
-		/^We blocked your comment "(.+)" because (.+). https:\/\/www\.hypixel\.net\/rules\/$/,
+	"chat:commentBlocked": /^We blocked your comment "(.+)" because (.+). https:\/\/www\.hypixel\.net\/rules\/$/,
 
 	"chat:advertising":
 		/^Advertising is against the rules. You will receive a punishment on the server if you attempt to advertise./,
 
-	"chat:command":
-		/(Guild|Officer) > (\[.{1,15}\] )?([A-z_0-9]{1,26})( \[[A-z_0-9]{1,15}\])?: !(\S*) ?(.*)?/,
+	"chat:command": /(Guild|Officer) > (\[.{1,15}\] )?([A-z_0-9]{1,26})( \[[A-z_0-9]{1,15}\])?: !(\S*) ?(.*)?/,
 
 	/**
 	 * When a message is sent in the guild chat
@@ -148,6 +146,6 @@ export default {
 	"chat:whisper": /^From (?:\[.*])?\s*(\w{2,17}).*?: (.+)$/,
 
 	"chat:anyReceived": /(.*)/,
-	
+
 	"chat:test": /Guild > (RPZ2|weeklies|Asumji) joined./,
 };

@@ -5,14 +5,13 @@ export default {
 	name: "login",
 	runOnce: true,
 	run: async (bot) => {
-		await bot.sendToDiscord(
-			"gc",
-			`${Emojis.success} **\`${bot.mineflayer.username}\` has logged in and is now ready!**`,
-		).then(msg => {
-			setTimeout(() => {
-				msg?.delete()
-			}, 5000);
-		});
+		await bot
+			.sendToDiscord("gc", `${Emojis.success} **\`${bot.mineflayer.username}\` has logged in and is now ready!**`)
+			.then((msg) => {
+				setTimeout(() => {
+					msg?.delete();
+				}, 5000);
+			});
 
 		if (process.env.REMINDER_ENABLED === "true") {
 			const frequency = parseInt(process.env.REMINDER_FREQUENCY, 10);
@@ -24,7 +23,7 @@ export default {
 
 		setInterval(() => {
 			bot.executeCommand("/g online");
-			bot.currentlyOnline = ""
+			bot.currentlyOnline = "";
 		}, 1000 * 60 * 5);
 
 		setTimeout(() => {

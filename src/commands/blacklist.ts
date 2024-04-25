@@ -96,7 +96,7 @@ export default {
 			const blacklistMessage = await (
 				(await bot.discord.channels.fetch(process.env.BLACKLIST_CHANNEL_ID)) as TextChannel
 			).send({
-				embeds: [embed]
+				embeds: [embed],
 			});
 
 			blacklist.push({

@@ -6,6 +6,6 @@ export default {
 	run: async (bot, playerName: string, status: "joined" | "left") => {
 		status === "joined" ? bot.onlineCount++ : bot.onlineCount--;
 
-		await bot.logger.info(playerName)
+		await bot.logger.info(playerName);
 	},
 } as Event;

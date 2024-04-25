@@ -16,14 +16,23 @@ export default {
 		message: string,
 	) => {
 		if (playerName == "VampireToucher48") {
-			if (latestMessage[1]?.reactions.cache.size == 0) latestMessage[1]?.react(emojis.success)
-			return
+			if (latestMessage[1]?.reactions.cache.size == 0) latestMessage[1]?.react(emojis.success);
+			return;
 		}
 
 		const content = ` **${rank ? rank + " " : ""}${escapeMarkdown(playerName)}${
 			guildRank ? " " + guildRank : ""
 		}:** ${escapeMarkdown(message)}`;
 
-		await bot.sendToDiscord(channel === "Guild" ? "gc" : "oc", content, getRankColor(rank), true, playerName, escapeMarkdown(message), true,guildRank);
+		await bot.sendToDiscord(
+			channel === "Guild" ? "gc" : "oc",
+			content,
+			getRankColor(rank),
+			true,
+			playerName,
+			escapeMarkdown(message),
+			true,
+			guildRank,
+		);
 	},
 } as Event;

@@ -7,7 +7,7 @@ export default {
 	runOnce: false,
 	run: async () => {
 		if (latestMessage[1]?.reactions.cache.size == 0) {
-			await latestMessage[1]?.react(emojis.error)
+			await latestMessage[1]?.react(emojis.error);
 			await latestMessage[1]?.reply("You are sending commands too fast! Please calm down!");
 		}
 	},

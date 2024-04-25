@@ -5,9 +5,9 @@ export default {
 	name: "chat:command",
 	runOnce: false,
 	run: async (bot, chat, rank, name, gRank, command, spacedArgs) => {
-		bot.logger.info(gRank + " " + rank + " " + name + " " + command + " " + spacedArgs)
+		bot.logger.info(gRank + " " + rank + " " + name + " " + command + " " + spacedArgs);
 
-        const args = spacedArgs?.split(" ")
-        runCommand(bot,chat,command,name,args)
+		const args = spacedArgs?.split(" ");
+		runCommand(bot, chat, command, name, args);
 	},
 } as Event;
