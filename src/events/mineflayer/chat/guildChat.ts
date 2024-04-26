@@ -15,7 +15,7 @@ export default {
 		guildRank: string | undefined,
 		message: string,
 	) => {
-		if (playerName == "VampireToucher48") {
+		if (playerName == bot.mineflayer._client.username) {
 			if (latestMessage[1]?.reactions.cache.size == 0) latestMessage[1]?.react(emojis.success);
 			return;
 		}

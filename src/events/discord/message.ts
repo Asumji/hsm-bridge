@@ -19,7 +19,7 @@ export default {
 		)
 			return;
 
-		let filterRegex = new RegExp(_filter.words.join("|").replace(/ /g, "[^a-zA-Z0-9]"));
+		let filterRegex = new RegExp(_filter.words.join("|").replace(/ /g, "[^a-zA-Z]"));
 
 		if (message.content.startsWith("!")) {
 			const args = message.content.split(" ");
@@ -34,7 +34,7 @@ export default {
 			}
 		}
 
-		if ((" " + message.content + " ").match(filterRegex)) {
+		if ((" " + message.content + " ").toLowerCase().match(filterRegex)) {
 			await message.channel.send(
 				`${emojis.warning} ${message.author.username}, you may not use profane language!`,
 			);
