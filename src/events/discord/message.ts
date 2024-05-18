@@ -1,17 +1,18 @@
 import { Message } from "discord.js";
 import { Event } from "../../interfaces/Event";
 import emojis from "../../util/emojis";
-import axios from "axios";
+// import axios from "axios";
 import { runCommand } from "../../util/commands";
 import _filter from "../../util/blacklist/_filter.json";
 import emojilib from "emojilib";
-import logError from "../../util/logError";
+// import logError from "../../util/logError";
 
 export let latestMessage: any[] = [];
 export default {
 	name: "messageCreate",
 	runOnce: false,
 	run: async (bot, message: Message) => {
+		const startMsg = message.content
 		if (
 			message.author.bot ||
 			message.member === null ||
@@ -72,39 +73,41 @@ export default {
 
 			if (message.content.length > 217) {
 				await message.react(emojis.error);
-				await message.channel.send(`Your message is too long! \`${message.content.length}/217\``);
+				await message.reply(`Your message is too long! \`${message.content.length}/217\``);
 				return;
 			}
 
 			if (message.attachments.size > 0) {
-				await axios({
-					url: "https://api.imgur.com/3/image",
-					method: "POST",
-					headers: {
-						Authorization: `Client-ID d30c6dc9941b52b`,
-					},
-					data: {
-						image: message.attachments.first()?.url,
-						type: "url",
-					},
-					responseType: "json",
-				})
-					.then((res) => {
-						setTimeout(() => {
-							bot.logger.info(res.data.data.link);
-							bot.sendGuildMessage(
-								message.channel.id === bot.memberChannel?.id ? "gc" : "oc",
-								res.data.data.link,
-							);
-						}, 500);
-					})
-					.catch((e) => {
-						message.reply("Image couldn't be sent due to an imgur API error.");
-						logError(new Error("Imgur API Error " + e));
-					});
+				// await axios({
+				// 	url: "https://api.imgur.com/3/image",
+				// 	method: "POST",
+				// 	headers: {
+				// 		Authorization: `Client-ID `<imgurapikey>,
+				// 	},
+				// 	data: {
+				// 		image: message.attachments.first()?.url,
+				// 		type: "url",
+				// 	},
+				// 	responseType: "json",
+				// })
+				// 	.then((res) => {
+				// 		setTimeout(() => {
+				// 			bot.logger.info(res.data.data.link);
+				// 			bot.sendGuildMessage(
+				// 				message.channel.id === bot.memberChannel?.id ? "gc" : "oc",
+				// 				res.data.data.link,
+				// 			);
+				// 		}, 500);
+				// 	})
+				// 	.catch((e) => {
+				// 		message.reply("Image couldn't be sent due to an imgur API error.");
+				// 		logError(new Error("Imgur API Error " + e));
+				// 	});
+				message.reply("Images/other files will not be sent due to Hypixel now also blocking Imgur links.")
 			}
+
 			latestMessage = [message.channel.id === bot.memberChannel?.id ? "gc" : "oc", message];
-			bot.sendGuildMessage(message.channel.id === bot.memberChannel?.id ? "gc" : "oc", message.content);
+			if (startMsg != "") bot.sendGuildMessage(message.channel.id === bot.memberChannel?.id ? "gc" : "oc", message.content);
 		}
 	},
 } as Event;

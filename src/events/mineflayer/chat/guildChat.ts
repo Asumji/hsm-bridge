@@ -20,6 +20,8 @@ export default {
 			return;
 		}
 
+		if (message.includes("@everyone") || message.includes("@here")) return
+
 		const content = ` **${rank ? rank + " " : ""}${escapeMarkdown(playerName)}${
 			guildRank ? " " + guildRank : ""
 		}:** ${escapeMarkdown(message)}`;

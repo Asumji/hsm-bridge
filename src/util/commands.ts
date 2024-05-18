@@ -53,7 +53,7 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 			botResponse(
 				bot,
 				chat,
-				"Mojang API could not be reached. Is " + args != undefined ? args[0] : name + " the correct name?",
+				"Mojang API could not be reached. Is " + (args != undefined ? args[0] : name) + " the correct name?",
 			);
 			return;
 		}
@@ -63,6 +63,9 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 					mojangProfile.id +
 					"&key=" +
 					process.env.HYPIXEL_API_KEY,
+				{headers:{
+					"User-Agent": "HotShirtlessMen BridgeBot 1.0.0"
+				}}
 			)
 			.then((res) => {
 				res.data.profiles.forEach(async (profile: any) => {
@@ -151,6 +154,7 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 										new Error("API unresponsive " + hypixelProfile.statusText),
 										hypixelProfile.statusText,
 									);
+									console.log(hypixelProfile,"hypixelprof")
 									botResponse(bot, chat, "API could not be reached.");
 									break;
 								}
@@ -346,6 +350,7 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 
 								if (isFetchError(museum)) {
 									logError(new Error("API unresponsive" + museum.statusText), museum.statusText);
+									console.log(museum,"museum")
 									botResponse(bot, chat, "API could not be reached.");
 									break;
 								}
@@ -414,6 +419,7 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 			})
 			.catch((e) => {
 				logError(new Error("API unresponsive " + e), e);
+				console.log(e,"gen")
 				botResponse(bot, chat, "API could not be reached.");
 				return;
 			});

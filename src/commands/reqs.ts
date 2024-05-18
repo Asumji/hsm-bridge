@@ -1,49 +1,52 @@
-import { Event } from "../../../interfaces/Event";
-import { EmbedBuilder } from "discord.js";
-import fetchMojangProfile from "../../../util/requests/fetchMojangProfile";
-import isFetchError from "../../../util/requests/isFetchError";
-import isUserBlacklisted from "../../../util/blacklist/isUserBlacklisted";
-import emojis from "../../../util/emojis";
+import { Command } from "../interfaces/Command";
+import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
+import fetchMojangProfile from "../util/requests/fetchMojangProfile";
+import isFetchError from "../util/requests/isFetchError";
 import axios from "axios";
-import { getLevel } from "../../../util/skillXP";
-import fetchHypixelPlayerProfile from "../../../util/requests/fetchHypixelPlayerProfile";
-import fetchLeaderboard from "../../../util/requests/fetchLeaderboard";
+import fetchLeaderboard from "../util/requests/fetchLeaderboard";
+import { getLevel } from "../util/skillXP";
+import fetchHypixelPlayerProfile from "../util/requests/fetchHypixelPlayerProfile";
 
 export default {
-	name: "chat:joinRequest",
-	runOnce: false,
-	run: async (bot, playerName: string) => {
-		bot.logger.info("Join req: " + playerName);
-		const embed = new EmbedBuilder()
+	data: {
+		name: "reqs",
+		description: "Display requirement related info about a player",
+        options: [
+			{
+				name: "player",
+				description: "The player you want to view",
+				type: ApplicationCommandOptionType.String,
+				required: true,
+			},
+		],
+	},
+	run: async (bot, interaction) => {
+        bot.logger.info("Reqs command")
+        const embed = new EmbedBuilder()
 			.setColor(0x00ff00)
-			.setTitle(emojis.join + " " + playerName + " wants to join the guild!")
+			.setTitle(interaction.options.getString("player",true)+(interaction.options.getString("player",true).endsWith("s") ? "'" : "'s")+" relevant guild stats.")
 			.setFooter({
 				text: "made by @asumji",
 				iconURL:
 					"https://cdn.discordapp.com/avatars/612625159656046643/c6872f8a0ea475493e54746bb6e5b27b.webp?size=4096",
 			});
 
-		const mojangProfile = await fetchMojangProfile(playerName);
-		const hypixelProfile = await fetchHypixelPlayerProfile(playerName);
+        const mojangProfile = await fetchMojangProfile(interaction.options.getString("player",true));
+		const hypixelProfile = await fetchHypixelPlayerProfile(interaction.options.getString("player",true));
 
-		if (isFetchError(hypixelProfile)) return;
-		if (isFetchError(mojangProfile)) return;
+		console.log(hypixelProfile)
 
-		if (isUserBlacklisted(mojangProfile.id)) {
-			bot.sendGuildMessage("oc", `The player ${playerName} is blacklisted. Do NOT accept their join request.`);
-			embed.setColor(0xff0000);
-			embed.setTitle(emojis.warning + " " + playerName + " is blacklisted.\nDO NOT accept their join request!");
-			bot.officerChannel?.send({ embeds: [embed] });
-		} else {
-			await axios
+		if (isFetchError(mojangProfile)) return interaction.reply("Mojang API Error\n"+mojangProfile.statusText);
+        if (isFetchError(hypixelProfile)) return interaction.reply("Hypixel API Error\n"+hypixelProfile.statusText);
+		
+		interaction.reply("Getting User Stats...")
+
+		await axios
 				.get(
 					"https://api.hypixel.net/v2/skyblock/profiles?uuid=" +
 						mojangProfile.id +
 						"&key=" +
 						process.env.HYPIXEL_API_KEY,
-					{headers:{
-						"User-Agent": "HotShirtlessMen BridgeBot 1.0.0"
-					}}
 				)
 				.then((res) => {
 					res.data.profiles.forEach(async (profile: any) => {
@@ -138,17 +141,10 @@ export default {
 							},
 							{ name: "Top 100s", value: lbs == "" ? "None" : lbs },
 						);
-						bot.sendGuildMessage(
-							"oc",
-							`Vampire XP: ${vamp["xp"] != undefined ? vamp["xp"] : 0} T4s: ${
-								vamp["boss_kills_tier_3"] != undefined ? vamp["boss_kills_tier_3"] : 0
-							} T5s: ${
-								vamp["boss_kills_tier_4"] != undefined ? vamp["boss_kills_tier_4"] : 0
-							} Skyblock Level: ${profile["members"][mojangProfile.id]["leveling"]["experience"] / 100}`,
-						);
-						bot.officerChannel?.send({ embeds: [embed] });
+                        interaction.editReply({embeds:[embed], content:""})
 					});
 				});
-		}
+                return
 	},
-} as Event;
+	staffOnly: true,
+} as Command;
