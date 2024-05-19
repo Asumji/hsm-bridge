@@ -34,8 +34,6 @@ export default {
         const mojangProfile = await fetchMojangProfile(interaction.options.getString("player",true));
 		const hypixelProfile = await fetchHypixelPlayerProfile(interaction.options.getString("player",true));
 
-		console.log(hypixelProfile)
-
 		if (isFetchError(mojangProfile)) return interaction.reply("Mojang API Error\n"+mojangProfile.statusText);
         if (isFetchError(hypixelProfile)) return interaction.reply("Hypixel API Error\n"+hypixelProfile.statusText);
 		
