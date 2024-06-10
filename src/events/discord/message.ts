@@ -82,7 +82,7 @@ export default {
 				// 	url: "https://api.imgur.com/3/image",
 				// 	method: "POST",
 				// 	headers: {
-				// 		Authorization: `Client-ID `<imgurapikey>,
+				// 		Authorization: `Client-ID ${process.env.IMGUR_API_KEY}`,
 				// 	},
 				// 	data: {
 				// 		image: message.attachments.first()?.url,
