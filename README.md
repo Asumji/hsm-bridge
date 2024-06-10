@@ -1,3 +1,5 @@
+<h1 align="center">Disclaimer: This is a modified Version of the original MiscGuild bridge. Below follows the ReadMe of the <a href="https://github.com/MiscGuild/bridge">original</a> along with links to it.</h1>
+
 <h1 align="center">Miscellaneous Guild Bridge</h1>
 
 <p align="center">
