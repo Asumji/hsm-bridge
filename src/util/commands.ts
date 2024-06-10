@@ -23,10 +23,9 @@ const commands: Commands = {
 		},
 	},
 	text: {
-		commands: ["mf", "active", "real"],
+		commands: ["mf", "active"],
 		aliases: {
-			activerole: "active",
-			thirty: "real",
+			activerole: "active"
 		},
 	},
 };
@@ -443,9 +442,6 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 					chat,
 					"The top 3 players every week in guild xp get the active guild rank and discord role.",
 				);
-				break;
-			case "real":
-				botResponse(bot, chat, "https://i.imgur.com/b9zU9EA.png");
 				break;
 			default:
 				botResponse(
