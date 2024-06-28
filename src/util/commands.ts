@@ -23,7 +23,7 @@ const commands: Commands = {
 		},
 	},
 	text: {
-		commands: ["mf", "active"],
+		commands: ["mf", "active", "gear", "strats"],
 		aliases: {
 			activerole: "active"
 		},
@@ -442,6 +442,23 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 					chat,
 					"The top 3 players every week in guild xp get the active guild rank and discord role.",
 				);
+				break;
+			/*case "real":
+					botResponse(bot, chat, "https://i.imgur.com/b9zU9EA.png");
+					break;*/
+			case "gear":
+				botResponse(
+					bot,
+					chat,
+					"you need the vampire dentist relic, the maximum upgrades that you can get (dont cheap out) and all the equipment, talismans and max armor you can get (minus tiny dancer and maybe hocus pocus)"
+				)
+				break;
+			case "strats":
+				botResponse(
+					bot,
+					chat,
+					" use the heart particles as a line to the ichor that the claws will travel through, take it slowly and dont go for risky ideas (aka do springs and goyles ASAP) also remember to heal"
+				)
 				break;
 			default:
 				botResponse(

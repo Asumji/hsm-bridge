@@ -67,10 +67,10 @@ export default {
 
 			if (type === "add") {
 				_filter.words.push(" " + args[0] + " ");
-				writeToJsonFile("./src/util/blacklist/_filter.json", _filter, interaction, successEmbed);
+				writeToJsonFile("./src/util/blacklist/_filter.json", _filter, interaction, successEmbed, true);
 			} else {
 				_filter.words.splice(_filter.words.indexOf(" " + args[0] + " "));
-				writeToJsonFile("./src/util/blacklist/_filter.json", _filter, interaction, successEmbed);
+				writeToJsonFile("./src/util/blacklist/_filter.json", _filter, interaction, successEmbed, true);
 			}
 		} else {
 			await interaction.reply({ content: `\`\`\`js\n${JSON.stringify(_filter)}\`\`\``, ephemeral: true });

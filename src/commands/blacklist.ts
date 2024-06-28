@@ -122,7 +122,7 @@ export default {
 			.setTitle("Completed!")
 			.setDescription(`${mojangProfile.name} was ${type === "add" ? "added to" : "removed from"} the blacklist!`);
 
-		writeToJsonFile("./src/util/_blacklist.json", blacklist, interaction, successEmbed);
+		writeToJsonFile("./src/util/_blacklist.json", blacklist, interaction, successEmbed, true);
 	},
 	staffOnly: true,
 } as Command;
