@@ -70,12 +70,12 @@ export default {
 							}
 						}
 
-						let farmingCap =
+						let farmingCap = profile["members"][mojangProfile.id]["jacobs_contest"]["perks"] ?
 							profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"] ==
 							undefined
 								? 50
 								: 50 +
-								  profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"];
+								  profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"]: 0;
 						let tamingCap =
 							hypixelProfile.achievements.skyblock_domesticator == undefined
 								? 0
