@@ -125,7 +125,9 @@ class Bot {
 	}
 
 	public sendToLimbo() {
-		this.executeCommand("§");
+		for (let i = 0; i < 15; i++) {
+			this.executeCommand("////")	
+		}
 	}
 
 	public setStatus() {
