@@ -5,6 +5,7 @@ import isFetchError from "./requests/isFetchError";
 import logError from "./logError";
 import { getLevel } from "./skillXP";
 import fetchHypixelPlayerProfile from "./requests/fetchHypixelPlayerProfile";
+import fetchSoopyCmd from "./requests/fetchSoopyCmd";
 import { shortenNumber } from "./shortenNumber";
 import { getNetworth } from "skyhelper-networth";
 import fetchMuseum from "./requests/fetchMuseum";
@@ -12,7 +13,7 @@ import { Commands } from "../interfaces/Command";
 
 const commands: Commands = {
 	api: {
-		commands: ["cata", "skills", "slayers", "bank", "level", "networth", "hotm"],
+		commands: ["cata", "skills", "slayers", "bank", "level", "networth", "hotm", "overflow"],
 		aliases: {
 			skill: "skills",
 			slayer: "slayers",
@@ -20,6 +21,9 @@ const commands: Commands = {
 			purse: "bank",
 			nw: "networth",
 			powder: "hotm",
+			overflowskills: "overflow",
+			oskills: "overflow",
+			oskill: "overflow"
 		},
 	},
 	text: {
@@ -45,6 +49,7 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 			return botResponse(bot, chat, "Missing some Arguments. Usage: !<command> <name>");
 		if (commands.api.commands.includes(commands.api.aliases[command])) command = commands.api.aliases[command];
 
+		if (name == "🫃") name = "Blastelectro"
 		const mojangProfile = await fetchMojangProfile(args != undefined ? args[0] : name);
 
 		if (isFetchError(mojangProfile)) {
@@ -401,6 +406,10 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 										gemstone.toString() == "NaN" ? 0 : gemstone,
 									)} | Glacite: ${shortenNumber(glacite.toString() == "NaN" ? 0 : glacite)}`,
 								);
+								break;
+							case "overflow":
+								let overflowskill = await fetchSoopyCmd("overflowskills",args != undefined ? args[0] : name)
+								botResponse(bot, chat, String(overflowskill).replace(")",") |"))
 								break;
 							default:
 								botResponse(
