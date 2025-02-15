@@ -8,6 +8,6 @@ export default {
 		bot.logger.info(gRank + " " + rank + " " + name + " " + command + " " + spacedArgs);
 
 		const args = spacedArgs?.split(" ");
-		runCommand(bot, chat, command, name, args);
+		runCommand(bot, chat, command.toLowerCase(), name, args);
 	},
 } as Event;

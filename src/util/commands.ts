@@ -50,6 +50,7 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 		if (commands.api.commands.includes(commands.api.aliases[command])) command = commands.api.aliases[command];
 
 		if (name == "🫃") name = "Blastelectro"
+		if (name == "�") name = "qwqsophie"
 		const mojangProfile = await fetchMojangProfile(args != undefined ? args[0] : name);
 
 		if (isFetchError(mojangProfile)) {

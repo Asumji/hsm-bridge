@@ -28,7 +28,7 @@ export default {
 				runCommand(
 					bot,
 					message.channel == bot.memberChannel ? "Guild" : "Officer",
-					args[0]?.replace("!", ""),
+					args[0]?.replace("!", "").toLowerCase(),
 					args[1],
 					undefined,
 				);
@@ -49,6 +49,11 @@ export default {
 				process.env.USE_FIRST_WORD_OF_AUTHOR_NAME === "true"
 					? message.member.displayName.split(" ")[0]
 					: message.member.displayName;
+
+			if (message.member.id == "540611128854708234") {
+				message.reply("kizkey :clown:")
+				return;
+			}
 
 			message.mentions.repliedUser != null
 				? (message.content = `${name} replying to ${
@@ -103,7 +108,10 @@ export default {
 				// 		message.reply("Image couldn't be sent due to an imgur API error.");
 				// 		logError(new Error("Imgur API Error " + e));
 				// 	});
-				message.reply("Images/other files will not be sent due to Hypixel now also blocking Imgur links.")
+				message.reply("People in guild will not see the image/file you sent but they have been notified to check bridge.")
+				setTimeout(() => {
+					bot.sendGuildMessage(message.channel.id === bot.memberChannel?.id ? "gc" : "oc", `${name} tried to send an image/file. Go check bridge.`)
+				}, 500)
 			}
 
 			latestMessage = [message.channel.id === bot.memberChannel?.id ? "gc" : "oc", message];
