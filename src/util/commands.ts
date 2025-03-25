@@ -27,7 +27,7 @@ const commands: Commands = {
 		},
 	},
 	text: {
-		commands: ["mf", "active", "gear", "strats"],
+		commands: ["mf", "active", "gear", "strats", "kuudra"],
 		aliases: {
 			activerole: "active"
 		},
@@ -470,6 +470,12 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 					" use the heart particles as a line to the ichor that the claws will travel through, take it slowly and dont go for risky ideas (aka do springs and goyles ASAP) also remember to heal"
 				)
 				break;
+			case "kuudra":
+				botResponse(
+					bot,
+					chat,
+					"kuudra."
+				)
 			default:
 				botResponse(
 					bot,

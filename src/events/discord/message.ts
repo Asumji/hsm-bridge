@@ -76,7 +76,7 @@ export default {
 				return "@" + message.guild?.members.cache.get(userID)?.displayName;
 			});
 
-			if (message.content.length > 217) {
+			if (message.content.length > 256) {
 				await message.react(emojis.error);
 				await message.reply(`Your message is too long! \`${message.content.length}/217\``);
 				return;

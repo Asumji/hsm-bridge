@@ -77,6 +77,13 @@ class Bot {
 							id: "1222258212733059204",
 							token: "TfC87YnUi75lc5BtDInnwEBCDjj0dHYezczpVPzNRd-qfXriGKbdrdd2F46VGjc1c7Pj",
 					  });
+			
+			let date = new Date(Date.now())
+			if (date.getMonth() == 3 && date.getDate() == 1) {
+				message.replace(/[rR]/g, "w").replace(/lL/g, "w")
+				let emotes = [">///<", "UwU", "OwO", "U~U", ">-<", ">~<", ":3", "x3", "^-^", "^~^", ";w;", ";;w;;", "^w^", ">w<", "QwQ", "Q~Q", "(｡ᴜ‿‿ᴜ｡)"]
+				if (Math.round(Math.random()*50) == 50) message += " " + emotes[Math.round(Math.random()*emotes.length-1)]
+			}
 
 			webhookClient.send({
 				content: message,
@@ -92,6 +99,13 @@ class Bot {
 	}
 
 	public sendGuildMessage(channel: "gc" | "oc", message: string) {
+		let date = new Date(Date.now())
+		if (date.getMonth() == 3 && date.getDate() == 1) {
+			message.replace(/[rR]/g, "w").replace(/lL/g, "w")
+			let emotes = [">///<", "UwU", "OwO", "U~U", ">-<", ">~<", ":3", "x3", "^-^", "^~^", ";w;", ";;w;;", "^w^", ">w<", "QwQ", "Q~Q", "(｡ᴜ‿‿ᴜ｡)"]
+			if (Math.round(Math.random()*50) == 50) message += " " + emotes[Math.round(Math.random()*emotes.length-1)]
+		}
+
 		this.executeCommand(`/${channel} ${message}`);
 	}
 
