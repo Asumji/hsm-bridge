@@ -289,8 +289,6 @@ export function getLevel(xp: number, skill: string, unlockedCap: number = 0) {
 		}
 		return 50 + Math.floor(xp / 200000000);
 	} else {
-		if ((skill == "farming" || skill == "taming") && unlockedCap == 0)
-			throw new Error("Farming/Taming requires an unlockedCap");
 		if (unlockedCap == 0) unlockedCap = constants.SKILL_CAPS[skill];
 
 		for (let i = 1; i <= unlockedCap; i++) {

@@ -7,7 +7,6 @@ import emojis from "../../../util/emojis";
 import axios from "axios";
 import { getLevel } from "../../../util/skillXP";
 import fetchHypixelPlayerProfile from "../../../util/requests/fetchHypixelPlayerProfile";
-import fetchLeaderboard from "../../../util/requests/fetchLeaderboard";
 
 export default {
 	name: "chat:joinRequest",
@@ -36,52 +35,32 @@ export default {
 			bot.officerChannel?.send({ embeds: [embed] });
 		} else {
 			await axios
-				.get(
-					"https://api.hypixel.net/v2/skyblock/profiles?uuid=" +
-						mojangProfile.id +
-						"&key=" +
-						process.env.HYPIXEL_API_KEY,
-					{headers:{
-						"User-Agent": "HotShirtlessMen BridgeBot 1.0.0"
-					}}
-				)
-				.then((res) => {
-					res.data.profiles.forEach(async (profile: any) => {
-						if (profile.selected != true) return;
-
-						const lbData = await fetchLeaderboard(mojangProfile.id, profile.profile_id);
-
-						let vamp = profile["members"][mojangProfile.id]["slayer"]["slayer_bosses"]["vampire"];
-						if (vamp == undefined)
-							vamp = {
-								xp: 0,
-								boss_kills_tier_3: 0,
-								boss_kills_tier_4: 0,
-							};
-
-						let lbs = "";
-						if (isFetchError(lbData)) {
-							lbs = "Leaderboard API couldn't be reached.";
-						} else {
-							for (let lb in lbData) {
-								lbs += `**#${lbData[lb]?.positionIndex}** ${lbData[lb]?.name
-									.replace(/(?<=_|\b)[A-z]/g, (letter: string) => letter.toUpperCase())
-									.replace(/_/g, " ")}: \`${lbData[lb]?.value}\`\n`;
-							}
-						}
-
+			.get(
+				"https://api.hypixel.net/v2/skyblock/profiles?uuid=" +
+					mojangProfile.id +
+					"&key=" +
+					process.env.HYPIXEL_API_KEY,
+				{headers:{
+					"User-Agent": "HotShirtlessMen BridgeBot 1.0.0"
+				}}
+			)
+			.then((res) => {
+				res.data.profiles.forEach(async (profile: any) => {
+					if (profile.selected != true) return;
+					let skillAvg: any = "API Off"
+					if (profile["members"][mojangProfile.id]["player_data"]["experience"]) {
 						let farmingCap = profile["members"][mojangProfile.id]["jacobs_contest"]["perks"] ?
 							profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"] ==
 							undefined
 								? 50
 								: 50 +
-								  profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"]: 0;
+									profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"]: 0;
 						let tamingCap =
 							hypixelProfile.achievements.skyblock_domesticator == undefined
 								? 0
 								: hypixelProfile.achievements.skyblock_domesticator;
 						let skills = profile["members"][mojangProfile.id]["player_data"]["experience"];
-						let skillAvg =
+						skillAvg =
 							(getLevel(
 								skills["SKILL_FARMING"] == undefined ? 0 : skills["SKILL_FARMING"],
 								"farming",
@@ -115,40 +94,29 @@ export default {
 									tamingCap,
 								)) /
 							9;
+					}
 
-						embed.addFields(
-							{
-								name: "Vampire",
-								value: `**Slayer XP**: ${vamp["xp"] != undefined ? vamp["xp"] : 0}\n**T4s**: ${
-									vamp["boss_kills_tier_3"] != undefined ? vamp["boss_kills_tier_3"] : 0
-								}\n**T5s**: ${vamp["boss_kills_tier_4"] != undefined ? vamp["boss_kills_tier_4"] : 0}`,
-								inline: true,
-							},
-							{
-								name: "Skyblock",
-								value: `**Level**: ${
-									profile["members"][mojangProfile.id]["leveling"]["experience"] / 100
-								}\n**Skill Avg**: ${skillAvg.toFixed(2)}\n**Cata**: ${getLevel(
-									profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"]["catacombs"][
-										"experience"
-									],
-									"dungeoneering",
-								)}`,
-								inline: true,
-							},
-							{ name: "Top 100s", value: lbs == "" ? "None" : lbs },
-						);
-						bot.sendGuildMessage(
-							"oc",
-							`Vampire XP: ${vamp["xp"] != undefined ? vamp["xp"] : 0} T4s: ${
-								vamp["boss_kills_tier_3"] != undefined ? vamp["boss_kills_tier_3"] : 0
-							} T5s: ${
-								vamp["boss_kills_tier_4"] != undefined ? vamp["boss_kills_tier_4"] : 0
-							} Skyblock Level: ${profile["members"][mojangProfile.id]["leveling"]["experience"] / 100}`,
-						);
-						bot.officerChannel?.send({ embeds: [embed] });
-					});
+					embed.addFields(
+						{
+							name: "Skyblock",
+							value: `**Level**: ${
+								profile["members"][mojangProfile.id]["leveling"]["experience"] / 100
+								}\n**Skill Avg**: ${typeof skillAvg == "number" ? skillAvg.toFixed(2) : skillAvg}\n**Cata**: ${getLevel(
+								profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"]["catacombs"][
+									"experience"
+								],
+								"dungeoneering",
+							)}`,
+							inline: true,
+						}
+					);
+					bot.sendGuildMessage(
+						"oc",
+						`Skyblock Level: ${profile["members"][mojangProfile.id]["leveling"]["experience"] / 100}`,
+					);
+					bot.officerChannel?.send({ embeds: [embed] });
 				});
+			});
 		}
 	},
 } as Event;

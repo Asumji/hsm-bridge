@@ -476,6 +476,7 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", command: s
 					chat,
 					"kuudra."
 				)
+				break;
 			default:
 				botResponse(
 					bot,

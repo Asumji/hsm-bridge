@@ -1,5 +1,3 @@
-//6209e127-a78a-41d9-b10a-83a6ac1cd73d
-
 import { ActivityType, ColorResolvable, EmbedBuilder, IntentsBitField, TextChannel, WebhookClient } from "discord.js";
 import { BotEvents, createBot } from "mineflayer";
 import { Command } from "../interfaces/Command";
