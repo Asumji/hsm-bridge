@@ -174,7 +174,7 @@ class Bot {
 		await recursiveWalkDir(path.join(__dirname, dir), callback, "Error while loading commands: ");
 	}
 
-	private async loadEvents(dir: string, emitter: EventEmitter) {
+	private async loadEvents(dir: string, emitter: EventEmitter | any) {
 		const callback = async (currentDir: string, file: string) => {
 			if (!(file.endsWith(".ts") || file.endsWith(".js")) || file.endsWith(".d.ts")) return;
 
@@ -202,7 +202,7 @@ class Bot {
 				return;
 			}
 
-			emitter.on(name, (...args) => {
+			emitter.on(name, (...args: any[]) => {
 				run(this, ...args.flat(2));
 			});
 		};
