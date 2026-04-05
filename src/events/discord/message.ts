@@ -50,7 +50,7 @@ export default {
 					? message.member.displayName.split(" ")[0]
 					: message.member.displayName;
 
-			if (message.member.id == "540611128854708234") {
+			if (message.member.id == "540611128854708234" && Math.round(Math.random()*1000) == 0) {
 				message.reply("kizkey :clown:")
 				return;
 			}
