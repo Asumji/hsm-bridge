@@ -16,8 +16,8 @@ export default {
 
 		const member = interaction.member as GuildMember;
 		if (
-			command.staffOnly &&
-			!member.roles.cache.has(process.env.STAFF_ROLE_ID) &&
+			((command.staffOnly === 2 && !member.roles.cache.has(process.env.STAFF_ROLE_ID)) ||
+			(command.staffOnly === 1 && !member.roles.cache.has(process.env.RECRUITER_ROLE_ID))) &&
 			member.id !== process.env.BOT_OWNER_ID
 		) {
 			const embed = new EmbedBuilder()

@@ -64,5 +64,5 @@ export default {
 			embeds: [embed],
 		});
 	},
-	staffOnly: true,
+	staffOnly: 2,
 } as Command;

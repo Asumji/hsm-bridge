@@ -30,5 +30,5 @@ export default {
 
 		await interaction.reply({ embeds: [embed] });
 	},
-	staffOnly: true,
+	staffOnly: 2,
 } as Command;

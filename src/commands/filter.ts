@@ -76,5 +76,5 @@ export default {
 			await interaction.reply({ content: `\`\`\`js\n${JSON.stringify(_filter)}\`\`\``, ephemeral: true });
 		}
 	},
-	staffOnly: true,
+	staffOnly: 2,
 } as Command;

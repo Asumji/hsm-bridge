@@ -15,4 +15,5 @@ export default {
 
 		await interaction.reply({ embeds: [embed] });
 	},
+	staffOnly: 0,
 } as Command;

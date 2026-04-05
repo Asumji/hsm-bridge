@@ -144,5 +144,5 @@ export default {
 				});
                 return
 	},
-	staffOnly: true,
+	staffOnly: 2,
 } as Command;

@@ -29,6 +29,7 @@ declare global {
 
 			BOT_OWNER_ID: string;
 			STAFF_ROLE_ID: string;
+			RECRUITER_ROLE_ID: string;
 		}
 	}
 }

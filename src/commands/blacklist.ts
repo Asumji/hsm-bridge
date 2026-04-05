@@ -124,5 +124,5 @@ export default {
 
 		writeToJsonFile("./src/util/_blacklist.json", blacklist, interaction, successEmbed, true);
 	},
-	staffOnly: true,
+	staffOnly: 2,
 } as Command;
