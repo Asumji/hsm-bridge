@@ -68,12 +68,12 @@ class Bot {
 			const webhookClient =
 				channel == "gc"
 					? new WebhookClient({
-							id: "1219013672438071418",
-							token: "Gt8P8T9MmIKDExC1mH_sxzVWMzuFuhcr588tGzM82xJmqSNPNsm3vGi2UaopA7JHh_R9",
+							id: process.env.PUBLIC_WEBHOOK_ID ?? "",
+							token: process.env.PUBLIC_WEBHOOK_TOKEN ?? "",
 					  })
 					: new WebhookClient({
-							id: "1222258212733059204",
-							token: "TfC87YnUi75lc5BtDInnwEBCDjj0dHYezczpVPzNRd-qfXriGKbdrdd2F46VGjc1c7Pj",
+							id: process.env.OFFICER_WEBHOOK_ID ?? "",
+							token: process.env.OFFICER_WEBHOOK_TOKEN ?? "",
 					  });
 			
 			let date = new Date(Date.now())
