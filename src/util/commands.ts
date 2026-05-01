@@ -5,7 +5,7 @@ import { ChatCommand } from "../interfaces/Command";
 const commands: ChatCommand[] = []
 fs.readdirSync("./dist/chat_commands").forEach(file => {
 	if (file.endsWith(".js")) {
-		const command = require(`C:/Users/timir/Desktop/bridge-master/bridge-master/dist/chat_commands/${file}`).default as ChatCommand;
+		const command = require(`../chat_commands/${file}`).default as ChatCommand;
 		commands.push(command);
 	}
 });
