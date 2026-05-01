@@ -23,16 +23,11 @@ export default {
 		let filterRegex = new RegExp(_filter.words.join("|").replace(/ /g, "[^a-zA-Z]"));
 
 		if (message.content.startsWith("!")) {
-			const args = message.content.split(" ");
-			if (args[0]) {
-				runCommand(
-					bot,
-					message.channel == bot.memberChannel ? "Guild" : "Officer",
-					args[0]?.replace("!", "").toLowerCase(),
-					args[1],
-					undefined,
-				);
-			}
+			runCommand(
+				bot,
+				message.channel == bot.memberChannel ? "Guild" : "Officer",
+				message.content.slice(1).trim(),
+			);
 		}
 
 		if ((" " + message.content + " ").toLowerCase().match(filterRegex)) {

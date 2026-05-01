@@ -7,15 +7,10 @@ export interface Command {
 	staffOnly?: number;
 }
 
-export interface Commands {
-	api: {
-		commands: string[];
-		aliases: any;
-	};
-	text: {
-		commands: string[];
-		aliases: any;
-	};
+export interface ChatCommand {
+	name: string;
+	aliases: string[];
+	run: (bot:Bot, channel: "Guild" | "Officer", args: string[], name?: string) => Promise<void>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

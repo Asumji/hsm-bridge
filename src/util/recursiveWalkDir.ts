@@ -23,7 +23,7 @@ async function recursiveWalkDir(
 			try {
 				await callback(normalisedDirName, file);
 			} catch (e: unknown) {
-				console.warn(`${errMessage} ${(e as Error).message}`);
+				console.warn(`${errMessage} ${(e as Error).message} | File: ${path.join(normalisedDirName, file)}`);
 			}
 		}
 	}
