@@ -19,7 +19,7 @@ export default {
 			.setFooter({
 				text: "made by @asumji",
 				iconURL:
-					"https://cdn.discordapp.com/avatars/612625159656046643/c6872f8a0ea475493e54746bb6e5b27b.webp?size=4096",
+					"http://asumji.duckdns.org/images/favicon.ico",
 			});
 
 		const mojangProfile = await fetchMojangProfile(playerName);

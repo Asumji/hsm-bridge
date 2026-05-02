@@ -5,6 +5,7 @@ declare global {
 			MINECRAFT_PASSWORD: string;
 
 			HYPIXEL_API_KEY: string;
+			IMGUR_API_KEY: string;
 
 			MINECRAFT_CHAT_SEPARATOR: string;
 
@@ -19,7 +20,6 @@ declare global {
 			DISCORD_TOKEN: string;
 			DISCORD_PREFIX: string;
 			DISCORD_INVITE_LINK: `discord.gg/${string}`;
-			USE_RANK_EMOJIS: "true" | "false";
 
 			DISCORD_SERVER_ID: string;
 			MEMBER_CHANNEL_ID: string;
@@ -30,6 +30,11 @@ declare global {
 			BOT_OWNER_ID: string;
 			STAFF_ROLE_ID: string;
 			RECRUITER_ROLE_ID: string;
+
+			PUBLIC_WEBHOOK_ID: string;
+			PUBLIC_WEBHOOK_TOKEN: string;
+			OFFICER_WEBHOOK_ID: string;
+			OFFICER_WEBHOOK_TOKEN: string;
 		}
 	}
 }
