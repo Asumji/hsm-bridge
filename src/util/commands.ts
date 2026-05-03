@@ -1,6 +1,7 @@
 import fs from "node:fs"
 import Bot from "../classes/Bot";
 import { ChatCommand } from "../interfaces/Command";
+import logError from "./logError";
 
 const commands: ChatCommand[] = []
 fs.readdirSync("./dist/chat_commands").forEach(file => {
@@ -29,6 +30,7 @@ export async function runCommand(bot: Bot, chat: "Guild" | "Officer", s: string,
 				await command.run(bot, chat, args, name);
 			} catch (error) {
 				botResponse(bot, chat, "An error occurred while running that command!");
+				logError(error instanceof Error ? error : new Error(String(error)), `Error in command ${command.name}`)
 			}
 			return;
 		}

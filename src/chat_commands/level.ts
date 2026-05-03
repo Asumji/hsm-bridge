@@ -3,7 +3,7 @@ import { ChatCommand } from "../interfaces/Command";
 import Bot from "../classes/Bot";
 import fetchMojangProfile from "../util/requests/fetchMojangProfile";
 import isFetchError from "../util/requests/isFetchError";
-import axios from "axios";
+import fetchSkyblockProfiles from "../util/requests/fetchSkyblockProfiles";
 
 export default {
     name: "level",
@@ -13,18 +13,12 @@ export default {
         if (typeof user != "string") return botResponse(bot, channel, "Usage: !level <ign>");
         const mojangProfile = await fetchMojangProfile(user as string);
         if (isFetchError(mojangProfile)) return botResponse(bot, channel, "Mojang API could not be reached. Is " + user + " the correct name?");
-        await axios.get("https://api.hypixel.net/v2/skyblock/profiles?uuid=" + mojangProfile.id + "&key=" + process.env.HYPIXEL_API_KEY,
-			{
-                headers: {
-					"User-Agent": "HotShirtlessMen BridgeBot 1.0.0"
-				}
-            }
-		)
-		.then((res) => {
-            res.data.profiles.forEach(async (profile: any) => {
-                if (profile.selected != true) return;
-                botResponse(bot, channel, `(${user}) | Level: ${profile["members"][mojangProfile.id]["leveling"]["experience"] / 100}`);
-            })
+        const skyblockProfiles = await fetchSkyblockProfiles(mojangProfile.id);
+        if (isFetchError(skyblockProfiles)) return botResponse(bot, channel, "Skyblock API could not be reached.");
+        
+        skyblockProfiles.profiles.forEach(async (profile: any) => {
+            if (profile.selected != true) return;
+            botResponse(bot, channel, `(${user}) | Level: ${profile["members"][mojangProfile.id]["leveling"]["experience"] / 100}`);
         })
     }
 } as ChatCommand;

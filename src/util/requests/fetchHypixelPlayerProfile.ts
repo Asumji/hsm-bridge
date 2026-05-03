@@ -10,9 +10,12 @@ setInterval(() => {
 export default async (username: string) => {
 	if (cache[`https://api.hypixel.net/v2/player?key=${process.env.HYPIXEL_API_KEY}&name=${username}`]) return cache[`https://api.hypixel.net/v2/player?key=${process.env.HYPIXEL_API_KEY}&name=${username}`] as HypixelPlayerResponse
 
-	const response = await fetch(
-		`https://api.hypixel.net/v2/player?key=${process.env.HYPIXEL_API_KEY}&name=${username}`,
-	);
+	const response = await fetch(`https://api.hypixel.net/v2/player?key=${process.env.HYPIXEL_API_KEY}&name=${username}`, {
+		headers: {
+			"API-Key": process.env.HYPIXEL_API_KEY,
+			"User-Agent": "HSM Bridge 1.0.0"
+		}
+	});
 
 	if (response.status === 429) return ({
 			status: 429,
