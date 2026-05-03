@@ -30,11 +30,15 @@ export default {
             res.data.profiles.forEach(async (profile: any) => {
                 if (profile.selected != true) return;
                 if (profile["members"][mojangProfile.id]["dungeons"] == undefined) return botResponse(bot, channel, `Player hasn't entered dungeons.`);
+                
+                const floorData = profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"][floors[floor[0] as keyof typeof floors]]
+                
+                if (floorData == undefined) return botResponse(bot, channel, "The player doesn't seem to have played that floor.");
 
                 const pbSPlus = (profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"][floors[floor[0] as keyof typeof floors]]["fastest_time_s_plus"][Number(floor[1])] ?? 0)/1000;
                 const comps = profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"][floors[floor[0] as keyof typeof floors]]["tier_completions"][Number(floor[1])] ?? 0;
 
-                botResponse(bot, channel, `(${user}) | S+ PB: ${Math.round(pbSPlus / 60)}m ${Math.round(pbSPlus % 60)}s | Comps: ${comps}`);
+                botResponse(bot, channel, `(${user}) | S+ PB: ${Math.floor(pbSPlus / 60)}m ${Math.round(pbSPlus % 60)}s | Comps: ${comps}`);
             })
         })
     }

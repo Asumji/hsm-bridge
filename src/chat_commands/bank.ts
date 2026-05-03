@@ -24,6 +24,8 @@ export default {
 		.then((res) => {
             res.data.profiles.forEach(async (profile: any) => {
                 if (profile.selected != true) return;
+                if (profile["members"][mojangProfile.id]["currencies"] == undefined || profile["banking"] == undefined) return botResponse(bot, channel, `Banking API seems to be disabled.`);
+
                 botResponse(bot, channel, `(${user}) | Purse: ${shortenNumber(profile["members"][mojangProfile.id]["currencies"]["coin_purse"],)} | Bank: ${shortenNumber(profile["banking"]["balance"])}`);
             })
         })

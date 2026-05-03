@@ -32,6 +32,8 @@ export default {
                     botResponse(bot, channel, "API could not be reached.");
                     return;
                 }
+                
+                if (profile["members"][mojangProfile.id]["player_data"]["experience"] == undefined) return botResponse(bot, channel, "Skills API seems to be disabled.");
 
                 const farmingCap = profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"] == undefined? 50: 50 + profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"];
                 const tamingCap = hypixelProfile.achievements.skyblock_domesticator == undefined ? 0 : hypixelProfile.achievements.skyblock_domesticator;
@@ -48,7 +50,7 @@ export default {
                 const social = getLevel(profile["members"][mojangProfile.id]["player_data"]["experience"]["SKILL_SOCIAL"] ?? 0, "social",);
                 const runecrafting = getLevel(profile["members"][mojangProfile.id]["player_data"]["experience"]["SKILL_RUNECRAFTING"] ?? 0, "runecrafting",);
 
-                const skillAvg =(farming + mining + foraging + combat + alchemy + carpentry + fishing + enchanting + taming) / 9;
+                const skillAvg = (farming + mining + foraging + combat + alchemy + carpentry + fishing + enchanting + taming) / 9;
 
                 botResponse(bot,channel,`(${user}) | Farming: ${farming} | Mining: ${mining} | Foraging: ${foraging} | Combat: ${combat} | Alchemy: ${alchemy} | Carpentry: ${carpentry} | Fishing: ${fishing} | Enchanting: ${enchanting} | Taming: ${taming} | Social: ${social} | Runecrafting: ${runecrafting} | SkillAvg: ${skillAvg.toFixed(2)}`,);                
             })
