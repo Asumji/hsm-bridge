@@ -12,7 +12,7 @@ export default {
     aliases: ["powder"],
     run: async (bot: Bot, channel: "Guild" | "Officer", args: string[], name?: string) => {
         const user = args.length === 0 ? name : args[0];
-        if (typeof user != "string") botResponse(bot, channel, "Usage: !bank <ign>");
+        if (typeof user != "string") return botResponse(bot, channel, "Usage: !hotm <ign>");
         const mojangProfile = await fetchMojangProfile(user as string);
         if (isFetchError(mojangProfile)) return botResponse(bot, channel, "Mojang API could not be reached. Is " + user + " the correct name?");
         await axios.get("https://api.hypixel.net/v2/skyblock/profiles?uuid=" + mojangProfile.id + "&key=" + process.env.HYPIXEL_API_KEY,

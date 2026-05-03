@@ -28,7 +28,7 @@ export default {
 			.setFooter({
 				text: "made by @asumji",
 				iconURL:
-					"http://asumji.duckdns.org/images/favicon.ico",
+					"https://files.catbox.moe/pt55wm.png",
 			});
 
         const mojangProfile = await fetchMojangProfile(interaction.options.getString("player",true));

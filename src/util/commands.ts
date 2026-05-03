@@ -20,12 +20,16 @@ export function botResponse(bot: Bot, channel: "Guild" | "Officer", text: string
 }
 
 export async function runCommand(bot: Bot, chat: "Guild" | "Officer", s: string, name?: string) {
-	const args = s.split(" ").filter(v => v !== "" && v !== "undefined");
+	const args = s.split(" ").filter(v => v !== "" && v !== "undefined").map(v => v.replace(/🫃/, "blastelectro"));
 	const commandName = args.shift()?.toLowerCase() ?? "";
 
 	for (const command of commands) {
 		if (command.name === commandName || command.aliases.includes(commandName)) {
-			await command.run(bot, chat, args, name);
+			try {
+				await command.run(bot, chat, args, name);
+			} catch (error) {
+				botResponse(bot, chat, "An error occurred while running that command!");
+			}
 			return;
 		}
 		if (commands.indexOf(command) === commands.length - 1) {

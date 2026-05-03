@@ -14,7 +14,7 @@ export default {
 			.setFooter({
 				text: "made by @asumji",
 				iconURL:
-					"http://asumji.duckdns.org/images/favicon.ico",
+					"https://files.catbox.moe/pt55wm.png",
 			});
 		await interaction.reply({ embeds: [embed], ephemeral: true });
 	},

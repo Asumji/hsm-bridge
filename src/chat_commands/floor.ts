@@ -1,0 +1,41 @@
+import { botResponse } from "../util/commands";
+import { ChatCommand } from "../interfaces/Command";
+import Bot from "../classes/Bot";
+import fetchMojangProfile from "../util/requests/fetchMojangProfile";
+import isFetchError from "../util/requests/isFetchError";
+import axios from "axios";
+
+export default {
+    name: "floor",
+    aliases: ["pb", "comps", "runs"],
+    run: async (bot: Bot, channel: "Guild" | "Officer", args: string[], name?: string) => {
+        const floors = {
+            "m": "master_catacombs",
+            "f": "catacombs"
+        }
+
+        const floor = args[0]?.toLowerCase();
+        const user = args.length < 2 ? name : args[1];
+        if (typeof user != "string" || typeof floor != "string") return botResponse(bot, channel, "Usage: !floor <floor> <ign>");
+        const mojangProfile = await fetchMojangProfile(user as string);
+        if (isFetchError(mojangProfile)) return botResponse(bot, channel, "Mojang API could not be reached. Is " + user + " the correct name?");
+        await axios.get("https://api.hypixel.net/v2/skyblock/profiles?uuid=" + mojangProfile.id + "&key=" + process.env.HYPIXEL_API_KEY,
+			{
+                headers: {
+					"User-Agent": "HotShirtlessMen BridgeBot 1.0.0"
+				}
+            }
+		)
+		.then((res) => {
+            res.data.profiles.forEach(async (profile: any) => {
+                if (profile.selected != true) return;
+                if (profile["members"][mojangProfile.id]["dungeons"] == undefined) return botResponse(bot, channel, `Player hasn't entered dungeons.`);
+
+                const pbSPlus = (profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"][floors[floor[0] as keyof typeof floors]]["fastest_time_s_plus"][Number(floor[1])] ?? 0)/1000;
+                const comps = profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"][floors[floor[0] as keyof typeof floors]]["tier_completions"][Number(floor[1])] ?? 0;
+
+                botResponse(bot, channel, `(${user}) | S+ PB: ${Math.round(pbSPlus / 60)}m ${Math.round(pbSPlus % 60)}s | Comps: ${comps}`);
+            })
+        })
+    }
+} as ChatCommand;

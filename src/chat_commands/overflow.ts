@@ -8,6 +8,7 @@ export default {
     aliases: ["oskills", "oskill", "overflowskills"],
     run: async (bot: Bot, channel: "Guild" | "Officer", args: string[], name?: string) => {
         const user = args.length === 0 ? name : args[0];
+        if (typeof user != "string") return botResponse(bot, channel, "Usage: !overflow <ign>");
         let overflowskill = await fetchSoopyCmd("overflowskills", user as string)
 		botResponse(bot, channel, String(overflowskill).replace(")",") |"))
     }
