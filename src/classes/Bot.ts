@@ -97,12 +97,12 @@ class Bot {
 	}
 
 	public sendGuildMessage(channel: "gc" | "oc", message: string) {
-		let date = new Date(Date.now())
-		if (date.getMonth() == 3 && date.getDate() == 1) {
-			message = message.replace(/[rR]/g, "w").replace(/[lL]/g, "w")
-			let emotes = [">///<", "UwU", "OwO", "U~U", ">-<", ">~<", ":3", "x3", "^-^", "^~^", ";w;", ";;w;;", "^w^", ">w<", "QwQ", "Q~Q", "(｡ᴜ‿‿ᴜ｡)"]
-			if (Math.round(Math.random()*50) == 50) message += " " + emotes[Math.round(Math.random()*emotes.length-1)]
-		}
+		// let date = new Date(Date.now())
+		// if (date.getMonth() == 3 && date.getDate() == 1) {
+		// 	message = message.replace(/[rR]/g, "w").replace(/[lL]/g, "w")
+		// 	let emotes = [">///<", "UwU", "OwO", "U~U", ">-<", ">~<", ":3", "x3", "^-^", "^~^", ";w;", ";;w;;", "^w^", ">w<", "QwQ", "Q~Q", "(｡ᴜ‿‿ᴜ｡)"]
+		// 	if (Math.round(Math.random()*50) == 50) message += " " + emotes[Math.round(Math.random()*emotes.length-1)]
+		// }
 
 		this.executeCommand(`/${channel} ${message}`);
 	}
