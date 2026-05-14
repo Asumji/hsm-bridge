@@ -3,7 +3,7 @@ import Bot from "../classes/Bot";
 import { ChatCommand } from "../interfaces/Command";
 import logError from "./logError";
 
-const commands: ChatCommand[] = []
+export const commands: ChatCommand[] = []
 fs.readdirSync("./dist/chat_commands").forEach(file => {
 	if (file.endsWith(".js")) {
 		const command = require(`../chat_commands/${file}`).default as ChatCommand;

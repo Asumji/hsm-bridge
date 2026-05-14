@@ -10,7 +10,7 @@ export default {
     aliases: ["sblevel", "sbxp", "sblvl"],
     run: async (bot: Bot, channel: "Guild" | "Officer", args: string[], name?: string) => {
         const user = args.length === 0 ? name : args[0];
-        if (typeof user != "string") return botResponse(bot, channel, "Usage: !level <ign>");
+        if (typeof user != "string") return botResponse(bot, channel, "Usage: !level [ign]");
         const mojangProfile = await fetchMojangProfile(user as string);
         if (isFetchError(mojangProfile)) return botResponse(bot, channel, "Mojang API could not be reached. Is " + user + " the correct name?");
         const skyblockProfiles = await fetchSkyblockProfiles(mojangProfile.id);

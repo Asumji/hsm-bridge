@@ -15,7 +15,7 @@ export default {
     run: async (bot: Bot, channel: "Guild" | "Officer", args: string[], name?: string) => {
         console.log(args, name)
         const user = args.length === 0 ? name : args[0];
-        if (typeof user != "string") return botResponse(bot, channel, "Usage: !networth <ign>");
+        if (typeof user != "string") return botResponse(bot, channel, "Usage: !networth [ign]");
         const mojangProfile = await fetchMojangProfile(user as string);
         if (isFetchError(mojangProfile)) return botResponse(bot, channel, "Mojang API could not be reached. Is " + user + " the correct name?");
         const skyblockProfiles = await fetchSkyblockProfiles(mojangProfile.id);
