@@ -104,7 +104,16 @@ class Bot {
 		// 	if (Math.round(Math.random()*50) == 50) message += " " + emotes[Math.round(Math.random()*emotes.length-1)]
 		// }
 
-		this.executeCommand(`/${channel} ${message}`);
+		if (message.length > 252) {
+			const parts = message.match(/.{1,252}/g) ?? [];
+			for (let i = 0; i < parts.length; i++) {
+				setTimeout(() => {
+					this.executeCommand(`/${channel} ${parts[i]}`);
+				}, 700*i)
+			}
+		} else {
+			this.executeCommand(`/${channel} ${message}`);
+		}
 	}
 
 	public executeCommand(message: string) {

@@ -32,6 +32,10 @@ export default {
 				reason.includes("is currently down for maintenance"):
 				message = "hypixel currently being in maintenance mode";
 				break;
+			
+			case reason.includes("Chat message too long"):
+				message = "a sent chat message being too long";
+				break;
 
 			default:
 				message = "an unkown reason";

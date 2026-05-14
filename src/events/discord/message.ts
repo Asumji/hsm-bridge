@@ -1,11 +1,9 @@
 import { Message } from "discord.js";
 import { Event } from "../../interfaces/Event";
 import emojis from "../../util/emojis";
-// import axios from "axios";
 import { runCommand } from "../../util/commands";
 import _filter from "../../util/blacklist/_filter.json";
 import emojilib from "emojilib";
-// import logError from "../../util/logError";
 
 export let latestMessage: any[] = [];
 export default {
@@ -71,38 +69,7 @@ export default {
 				return "@" + message.guild?.members.cache.get(userID)?.displayName;
 			});
 
-			if (message.content.length > 256) {
-				await message.react(emojis.error);
-				await message.reply(`Your message is too long! \`${message.content.length}/217\``);
-				return;
-			}
-
 			if (message.attachments.size > 0) {
-				// await axios({
-				// 	url: "https://api.imgur.com/3/image",
-				// 	method: "POST",
-				// 	headers: {
-				// 		Authorization: `Client-ID ${process.env.IMGUR_API_KEY}`,
-				// 	},
-				// 	data: {
-				// 		image: message.attachments.first()?.url,
-				// 		type: "url",
-				// 	},
-				// 	responseType: "json",
-				// })
-				// 	.then((res) => {
-				// 		setTimeout(() => {
-				// 			bot.logger.info(res.data.data.link);
-				// 			bot.sendGuildMessage(
-				// 				message.channel.id === bot.memberChannel?.id ? "gc" : "oc",
-				// 				res.data.data.link,
-				// 			);
-				// 		}, 500);
-				// 	})
-				// 	.catch((e) => {
-				// 		message.reply("Image couldn't be sent due to an imgur API error.");
-				// 		logError(new Error("Imgur API Error " + e));
-				// 	});
 				message.reply("People in guild will not see the image/file you sent but they have been notified to check bridge.")
 				setTimeout(() => {
 					bot.sendGuildMessage(message.channel.id === bot.memberChannel?.id ? "gc" : "oc", `${name} tried to send an image/file. Go check bridge.`)
