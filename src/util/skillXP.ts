@@ -246,7 +246,7 @@ const constants: any = {
 		farming: 60,
 		mining: 60,
 		combat: 60,
-		foraging: 50,
+		foraging: 54,
 		fishing: 50,
 		enchanting: 60,
 		alchemy: 50,
@@ -279,7 +279,7 @@ export function getLevel(xp: number, skill: string, unlockedCap: number = 0) {
 	) {
 		for (let i = 1; i <= constants.SKILL_CAPS[skill]; i++) {
 			xp -= constants[skill.toUpperCase() + "_XP"][i];
-			if (xp < 0) return i - 1;
+			if (xp < 0) return i;
 		}
 		return constants.SKILL_CAPS[skill];
 	} else if (skill == "dungeoneering") {
@@ -294,7 +294,19 @@ export function getLevel(xp: number, skill: string, unlockedCap: number = 0) {
 		for (let i = 1; i <= unlockedCap; i++) {
 			xp -= constants.LEVELING_XP[i];
 			if (xp < 0) return i - 1;
+			else if (i >= 60 && i < unlockedCap) {
+				let slope = 600000
+				let xpForCurr = 7000000 + slope
+				while (xp >= xpForCurr) {
+					i++
+					xp -= xpForCurr
+					xpForCurr += slope
+					if (i % 10 == 0) slope *= 2
+				}
+				return i
+			}
 		}
+		
 		return unlockedCap;
 	}
 }

@@ -30,7 +30,7 @@ export default {
             
             if (profile["members"][mojangProfile.id]["player_data"]["experience"] == undefined) return botResponse(bot, channel, "Skills API seems to be disabled.");
 
-            const farmingCap = profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"] == undefined? 50: 50 + profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"];
+            const farmingCap = profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"] == undefined? 50 : 50 + profile["members"][mojangProfile.id]["jacobs_contest"]["perks"]["farming_level_cap"];
             const tamingCap = hypixelProfile.achievements.skyblock_domesticator == undefined ? 0 : hypixelProfile.achievements.skyblock_domesticator;
 
             const farming = getLevel(profile["members"][mojangProfile.id]["player_data"]["experience"]["SKILL_FARMING"] ?? 0, "farming", farmingCap);
