@@ -24,7 +24,7 @@ export default {
         
         skyblockProfiles.profiles.forEach(async (profile: any) => {
             if (profile.selected != true) return;
-            if (profile["members"][mojangProfile.id]["dungeons"] == undefined) return botResponse(bot, channel, `Player hasn't entered dungeons.`);
+            if (profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"] == undefined) return botResponse(bot, channel, `Player hasn't entered dungeons.`);
             
             const floorData = profile["members"][mojangProfile.id]["dungeons"]["dungeon_types"][floors[floor[0] as keyof typeof floors]]
             

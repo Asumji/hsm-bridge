@@ -16,7 +16,6 @@ export default {
         if (isFetchError(mojangProfile)) return botResponse(bot, channel, "Mojang API could not be reached. Is " + user + " the correct name?");
         const skyblockProfiles = await fetchSkyblockProfiles(mojangProfile.id);
         if (isFetchError(skyblockProfiles)) return botResponse(bot, channel, "Skyblock API could not be reached.");
-        console.log(skyblockProfiles)
         skyblockProfiles.profiles.forEach(async (profile: any) => {
             if (profile.selected != true) return;
             if (profile["members"][mojangProfile.id]["dungeons"] == undefined) return botResponse(bot, channel, `Player hasn't entered dungeons.`);
