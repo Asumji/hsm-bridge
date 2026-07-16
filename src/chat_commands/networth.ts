@@ -5,7 +5,7 @@ import fetchMojangProfile from "../util/requests/fetchMojangProfile";
 import isFetchError from "../util/requests/isFetchError";
 import fetchMuseum from "../util/requests/fetchMuseum";
 import logError from "../util/logError";
-import { getNetworth } from "skyhelper-networth";
+import { ProfileNetworthCalculator  } from "skyhelper-networth";
 import { shortenNumber } from "../util/shortenNumber";
 import fetchSkyblockProfiles from "../util/requests/fetchSkyblockProfiles";
 
@@ -30,12 +30,8 @@ export default {
                 botResponse(bot, channel, "API could not be reached.");
                 return;    
             }
-
-            const networth = await getNetworth(profile["members"][mojangProfile.id], profile.banking?.balance || 0, {
-                v2Endpoint: true,
-                onlyNetworth: true,
-                museumData: museum["members"][mojangProfile.id],
-            });
+            const networthManager = new ProfileNetworthCalculator(profile["members"][mojangProfile.id], museum["members"][mojangProfile.id], profile.banking?.balance || 0);
+            const networth = await networthManager.getNetworth();
 
             if (networth.noInventory) return botResponse(bot, channel, "Inventory API is turned off");
 
